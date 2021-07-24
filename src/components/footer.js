@@ -15,8 +15,32 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
+import { useMemo } from "react";
+
 export default function Footer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const SOURCE_LINKS = useMemo(
+    () => [
+      {
+        title: "Kasus, kematian, rawatan, kesembuhan:",
+        link: "https://github.com/Reynadi531/api-covid19-indonesia-v2",
+        linkText: "API dari Reynadi, sumber dari pemerintah Indonesia",
+      },
+      {
+        title: "Vaksinasi:",
+        link: "https://vaksincovid19-api.vercel.app/api/",
+        linkText: "Web Scraping API dari website Kemenkes oleh Reynadi",
+      },
+      {
+        title: "Data provinsi:",
+        link: "https://github.com/Reynadi531/api-covid19-indonesia-v2",
+        linkText: "API dari Reynadi, sumber dari pemerintah Indonesia",
+      },
+    ],
+    []
+  );
+
   return (
     <>
       <Flex
@@ -62,31 +86,17 @@ export default function Footer() {
           <ModalCloseButton />
           <ModalBody>
             <VStack align="left">
-              <Text color="gray.500">
-                Kasus, kematian, rawatan, kesembuhan:
-              </Text>
-              <Link
-                href="https://github.com/Reynadi531/api-covid19-indonesia-v2"
-                color="blue.500"
-              >
-                API dari Reynadi, sumber dari pemerintah Indonesia
-              </Link>
-              <Divider />
-              <Text color="gray.500">Vaksinasi: </Text>
-              <Link
-                href="https://vaksincovid19-api.vercel.app/api/"
-                color="blue.500"
-              >
-                Web Scraping API dari website Kemenkes oleh Reynadi
-              </Link>
-              <Divider />
-              <Text color="gray.500">Data provinsi: </Text>
-              <Link
-                href="https://github.com/Reynadi531/api-covid19-indonesia-v2"
-                color="blue.500"
-              >
-                API dari Reynadi, sumber dari pemerintah Indonesia
-              </Link>
+              {SOURCE_LINKS.map((data) => {
+                return (
+                  <>
+                    <Text color="gray.500">{data.title}</Text>
+                    <Link href={data.link} color="blue.500" isExternal>
+                      {data.linkText}
+                    </Link>
+                    <Divider />
+                  </>
+                );
+              })}
             </VStack>
           </ModalBody>
 

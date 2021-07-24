@@ -6,9 +6,9 @@ import {
   SimpleGrid,
   Stack,
   Link,
-  List,
-  ListItem,
-  ListIcon,
+  //List,
+  //ListItem,
+  //ListIcon,
   Button,
   Flex,
 } from "@chakra-ui/react";
@@ -22,10 +22,10 @@ import DailyCase from "../charts/dailyCase";
 import KemkesCharts from "../kemkesTableau/kemkesCharts";
 import { NavLink } from "react-router-dom";
 import {
-  RiWhatsappFill,
+  //RiWhatsappFill,
   RiCloseCircleLine,
-  RiSearch2Line,
-  RiPhoneFill,
+  //RiSearch2Line,
+  //RiPhoneFill,
   RiInformationFill,
 } from "react-icons/ri";
 
@@ -109,60 +109,60 @@ function InfoAlert({ setShowInfo, ...props }) {
   );
 }
 
-function InfoStack() {
-  return (
-    <Stack spacing={0}>
-      <Text>
-        <List>
-          <Stack mt={2} spacing={[4, 1]}>
-            <ListItem>
-              <ListIcon as={RiPhoneFill} color="teal.500" fontSize="1.3rem" />
-              <Text as="u">
-                <Link href="tel:119p9">
-                  Hotline telpon Kemenkes (119 extension 9)
-                </Link>
-              </Text>
-            </ListItem>
-            <ListItem>
-              <ListIcon as={RiPhoneFill} color="teal.500" fontSize="1.3rem" />
-              <Text as="u">
-                <Link href="tel:117p5">
-                  Hotline Contact Center BNPB, Donor Konvalesen (117 extension
-                  5)
-                </Link>
-              </Text>
-            </ListItem>
-            <ListItem>
-              <ListIcon as={RiSearch2Line} color="teal.500" fontSize="1.3rem" />
-              <Text as="u">
-                <Link
-                  href="https://www.wargabantuwarga.com"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Website informasi COVID oleh tim WargaBantuWarga.com
-                </Link>
-              </Text>
-            </ListItem>
-            <ListItem>
-              <ListIcon
-                as={RiWhatsappFill}
-                color="teal.500"
-                fontSize="1.3rem"
-              />
-              <Text as="u">
-                <Link
-                  href="https://api.whatsapp.com/send/?phone=6281257579812&text&app_absent=0"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Hotline chat WhatsApp WargaBantuWarga
-                </Link>
-              </Text>
-            </ListItem>
-          </Stack>
-        </List>
-      </Text>
-    </Stack>
-  );
-}
+// function InfoStack() {
+//   return (
+//     <Stack spacing={0}>
+//       <Text>
+//         <List>
+//           <Stack mt={2} spacing={[4, 1]}>
+//             <ListItem>
+//               <ListIcon as={RiPhoneFill} color="teal.500" fontSize="1.3rem" />
+//               <Text as="u">
+//                 <Link href="tel:119p9">
+//                   Hotline telpon Kemenkes (119 extension 9)
+//                 </Link>
+//               </Text>
+//             </ListItem>
+//             <ListItem>
+//               <ListIcon as={RiPhoneFill} color="teal.500" fontSize="1.3rem" />
+//               <Text as="u">
+//                 <Link href="tel:117p5">
+//                   Hotline Contact Center BNPB, Donor Konvalesen (117 extension
+//                   5)
+//                 </Link>
+//               </Text>
+//             </ListItem>
+//             <ListItem>
+//               <ListIcon as={RiSearch2Line} color="teal.500" fontSize="1.3rem" />
+//               <Text as="u">
+//                 <Link
+//                   href="https://www.wargabantuwarga.com"
+//                   target="_blank"
+//                   rel="noreferrer"
+//                 >
+//                   Website informasi COVID oleh tim WargaBantuWarga.com
+//                 </Link>
+//               </Text>
+//             </ListItem>
+//             <ListItem>
+//               <ListIcon
+//                 as={RiWhatsappFill}
+//                 color="teal.500"
+//                 fontSize="1.3rem"
+//               />
+//               <Text as="u">
+//                 <Link
+//                   href="https://api.whatsapp.com/send/?phone=6281257579812&text&app_absent=0"
+//                   target="_blank"
+//                   rel="noreferrer"
+//                 >
+//                   Hotline chat WhatsApp WargaBantuWarga
+//                 </Link>
+//               </Text>
+//             </ListItem>
+//           </Stack>
+//         </List>
+//       </Text>
+//     </Stack>
+//   );
+// }
