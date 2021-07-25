@@ -17,17 +17,29 @@ import {
   Legend,
   Brush,
 } from "recharts";
+import axios from "axios";
+import ApiError from "../apiError/apiError";
 import Loading from "../loading";
 
-export default function DailyCase({ mainData, ...props }) {
+export default function DailyCase({ ...props }) {
   const [chartData, setChartData] = useState();
-  const [quantity, setQuatity] = useState("harian");
+  const [apiError, setApiError] = useState();
+  const [quantity, setQuantity] = useState("harian");
 
   useEffect(() => {
-    if (mainData) {
-      setChartData(mainData);
+    async function getDailyData() {
+      await axios
+        .get("http://covidtracker-backend.vercel.app/api/national/all_daily")
+        .then((response) => {
+          setChartData(response.data.modifiedData);
+        })
+        .catch((error) => {
+          setApiError(error.toString());
+          console.error("There was an error!", error);
+        });
     }
-  }, [mainData]);
+    getDailyData();
+  }, []);
 
   return (
     <Box mt={6} {...props}>
@@ -37,13 +49,13 @@ export default function DailyCase({ mainData, ...props }) {
           ? "Perkembangan Kasus Per Hari"
           : "Perkembangan Kasus Secara Kumulatif"}
       </Text>
-      <RadioQuantity setQuatity={setQuatity} />
-      {mainData ? (
+      <RadioQuantity setQuantity={setQuantity} />
+      {chartData ? (
         <>
           <Text color="gray.600" mt={3} fontSize={"sm"}>
             Klik label di legenda untuk menyembunyikan data label tersebut
           </Text>
-          <Chart data={chartData} quantity={quantity} />
+          <Chart data={chartData} quantity={quantity} error={apiError} />
         </>
       ) : (
         <Loading minH="10vh" mt={5} />
@@ -52,19 +64,19 @@ export default function DailyCase({ mainData, ...props }) {
   );
 }
 
-function RadioQuantity({ setQuatity }) {
+function RadioQuantity({ setQuantity, ...props }) {
   const options = ["harian", "kumulatif"];
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "quantity",
     defaultValue: "harian",
-    onChange: setQuatity,
+    onChange: setQuantity,
   });
 
   const group = getRootProps();
 
   return (
-    <HStack {...group}>
+    <HStack {...props} {...group}>
       {options.map((value) => {
         const radio = getRadioProps({ value });
         return (
@@ -99,8 +111,8 @@ function CustomRadio(props) {
         _focus={{
           boxShadow: "outline",
         }}
-        px={5}
-        py={3}
+        px={3}
+        py={2}
       >
         {props.children}
       </Box>
@@ -108,7 +120,7 @@ function CustomRadio(props) {
   );
 }
 
-function Chart({ data, quantity }) {
+function Chart({ data, quantity, error }) {
   const [opacity, setOpacity] = useState({
     positif: 1,
     dirawat: 1,
@@ -151,85 +163,100 @@ function Chart({ data, quantity }) {
     },
     [hidden, setHidden]
   );
+
   const chartWidth = () => {
     return window.innerWidth > 1000 ? 1000 : window.innerWidth - 20;
   };
-  return (
-    <Box>
-      <Flex justifyContent="center" mt={5}>
-        <LineChart
-          width={chartWidth()}
-          height={500}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <Brush
-            travellerWidth={chartWidth() < 1000 ? 30 : 15}
-            width={chartWidth() * 0.8}
-            dataKey="tanggal"
-            x={chartWidth() * 0.1}
-            startIndex={data ? data.length - 30 : 0}
-          />
-          <XAxis dataKey="tanggal" />
-          <YAxis />
-          <Tooltip />
-          <Legend
-            verticalAlign="top"
-            height={36}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onClick={selectKey}
-          />
-          <Line
-            type="monotone"
-            name="Positif"
-            dataKey={quantity === "harian" ? "positif" : "positif_kumulatif"}
-            strokeOpacity={opacity.positif}
-            stroke="#E53E3E"
-            dot={false}
-            hide={hidden.positif}
-            isAnimationActive={false}
-          />
-          <Line
-            type="monotone"
-            name="Dirawat"
-            dataKey={quantity === "harian" ? "dirawat" : "dirawat_kumulatif"}
-            strokeOpacity={opacity.dirawat}
-            stroke="#ED8936"
-            dot={false}
-            hide={hidden.dirawat}
-            isAnimationActive={false}
-          />
-          <Line
-            type="monotone"
-            name="Sembuh"
-            dataKey={quantity === "harian" ? "sembuh" : "sembuh_kumulatif"}
-            strokeOpacity={opacity.sembuh}
-            stroke="#82ca9d"
-            dot={false}
-            hide={hidden.sembuh}
-            isAnimationActive={false}
-          />
-          <Line
-            type="monotone"
-            name="Meninggal"
-            dataKey={
-              quantity === "harian" ? "meninggal" : "meninggal_kumulatif"
-            }
-            strokeOpacity={opacity.meninggal}
-            stroke="#000"
-            dot={false}
-            hide={hidden.meninggal}
-            isAnimationActive={false}
-          />
-        </LineChart>
-      </Flex>
-    </Box>
-  );
+
+  if (error) {
+    <ApiError
+      errorTitle="Ada masalah di API untuk mengambil data grafik"
+      errorMessage={error}
+    />;
+  } else {
+    return (
+      <Box>
+        <Flex justifyContent="center" mt={5}>
+          <LineChart
+            width={chartWidth()}
+            height={500}
+            data={data}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <Brush
+              travellerWidth={chartWidth() < 1000 ? 30 : 15}
+              width={chartWidth() * 0.8}
+              dataKey="date"
+              x={chartWidth() * 0.1}
+              startIndex={data ? data.length - 30 : 0}
+            />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Legend
+              verticalAlign="top"
+              height={36}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={selectKey}
+            />
+            <Line
+              type="monotone"
+              name="Kasus"
+              dataKey={
+                quantity === "harian" ? "update.positive" : "total.positive"
+              }
+              strokeOpacity={opacity.positif}
+              stroke="#E53E3E"
+              dot={false}
+              hide={hidden.positif}
+              isAnimationActive={false}
+            />
+            <Line
+              type="monotone"
+              name="Dirawat"
+              dataKey={
+                quantity === "harian"
+                  ? "update.hospitalized"
+                  : "total.hospitalized"
+              }
+              strokeOpacity={opacity.dirawat}
+              stroke="#ED8936"
+              dot={false}
+              hide={hidden.dirawat}
+              isAnimationActive={false}
+            />
+            <Line
+              type="monotone"
+              name="Sembuh"
+              dataKey={
+                quantity === "harian" ? "update.recovered" : "total.recovered"
+              }
+              strokeOpacity={opacity.sembuh}
+              stroke="#82ca9d"
+              dot={false}
+              hide={hidden.sembuh}
+              isAnimationActive={false}
+            />
+            <Line
+              type="monotone"
+              name="Meninggal"
+              dataKey={quantity === "harian" ? "update.death" : "total.death"}
+              strokeOpacity={opacity.meninggal}
+              stroke="#000"
+              dot={false}
+              hide={hidden.meninggal}
+              isAnimationActive={false}
+            />
+          </LineChart>
+        </Flex>
+      </Box>
+    );
+  }
 }
