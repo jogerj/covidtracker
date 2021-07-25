@@ -7,43 +7,9 @@ import Home from "./components/home/home";
 import Footer from "./components/footer";
 import DataProvinsi from "./components/dataProvinsi/dataProvinsi";
 import Info from "./components/info/info";
-import axios from "axios";
 
 function App() {
-  const [caseData, setCaseData] = useState();
-  const [vaccination, setVaccination] = useState();
-  const [error, setError] = useState("");
   const [tanggal, setTanggal] = useState();
-
-  // function setData1(data) {
-  //   let temp;
-  //   data.forEach((element) => {
-  //     temp = new Date(element.tanggal);
-  //     element.tanggal = temp.toLocaleDateString("id-ID");
-  //   });
-  //   setTanggal(data[data.length - 1].tanggal);
-  //   setCaseData(data);
-  // }
-
-  // async function apiGet(apiURL, setter, queryParam = "") {
-  //   axios
-  //     .get(apiURL + queryParam)
-  //     .then((response) => {
-  //       //"res", response.data);
-  //       setter(response.data);
-  //     })
-  //     .catch((error) => {
-  //       setError(error.toString());
-  //       console.error("There was an error!", error);
-  //     });
-  // }
-  // useEffect(() => {
-  //   apiGet(
-  //     "https://apicovid19indonesia-v2.vercel.app/api/indonesia/harian",
-  //     setData1
-  //   );
-  //   apiGet("https://vaksincovid19-api.vercel.app/api/vaksin", setVaccination);
-  // }, []);
 
   return (
     <ChakraProvider>
@@ -60,7 +26,7 @@ function App() {
                 <Info />
               </Route>
               <Route path="/home">
-                <Home />
+                <Home setTanggal={setTanggal} />
               </Route>
               <Route exact path="/">
                 <Redirect to="/home" />
