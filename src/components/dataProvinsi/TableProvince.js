@@ -1,11 +1,11 @@
-import {useState, useEffect} from "react";
-import {Text, Box, Heading} from "@chakra-ui/react";
-import DataTable, {debounceSearchRender} from "mui-datatables";
+import { useState, useEffect } from "react";
+import { Text, Box } from "@chakra-ui/react";
+import DataTable, { debounceSearchRender } from "mui-datatables";
 import CountUp from "react-countup";
-import {MdReportProblem} from "react-icons/md";
 import Loading from "../loading";
+import ApiError from "../apiError/apiError";
 
-export default function TableProvince({...props}) {
+export default function TableProvince({ ...props }) {
   const [localCaseData, setLocalCaseData] = useState();
   const [apiError, setApiError] = useState();
   const options = {
@@ -14,8 +14,8 @@ export default function TableProvince({...props}) {
     responsive: "simple",
     customSearchRender: debounceSearchRender(500),
     filter: true,
-    enableNestedDataAccess: '.',
-    draggableColumns: {enabled: true},
+    enableNestedDataAccess: ".",
+    draggableColumns: { enabled: true },
   };
   const cols = [
     {
@@ -28,14 +28,14 @@ export default function TableProvince({...props}) {
         filterType: "multiselect",
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -51,23 +51,23 @@ export default function TableProvince({...props}) {
           if (dataIndex <= 33) {
             let val = localCaseData[dataIndex].kasus;
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -83,23 +83,23 @@ export default function TableProvince({...props}) {
           if (dataIndex <= 33) {
             let val = localCaseData[dataIndex].penambahan.positif;
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -115,23 +115,23 @@ export default function TableProvince({...props}) {
           if (dataIndex <= 33) {
             let val = localCaseData[dataIndex].dirawat;
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -147,23 +147,23 @@ export default function TableProvince({...props}) {
           if (dataIndex <= 33) {
             let val = localCaseData[dataIndex].sembuh;
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -179,23 +179,23 @@ export default function TableProvince({...props}) {
           if (dataIndex <= 33) {
             let val = localCaseData[dataIndex].penambahan.sembuh;
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -211,23 +211,23 @@ export default function TableProvince({...props}) {
           if (dataIndex <= 33) {
             let val = localCaseData[dataIndex].meninggal;
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -243,23 +243,23 @@ export default function TableProvince({...props}) {
           if (dataIndex <= 33) {
             let val = localCaseData[dataIndex].penambahan.meninggal;
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -274,25 +274,25 @@ export default function TableProvince({...props}) {
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].jenis_kelamin['laki-laki'];
+            let val = localCaseData[dataIndex].jenis_kelamin["laki-laki"];
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -307,25 +307,25 @@ export default function TableProvince({...props}) {
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].jenis_kelamin['perempuan'];
+            let val = localCaseData[dataIndex].jenis_kelamin["perempuan"];
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -340,25 +340,25 @@ export default function TableProvince({...props}) {
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur['0-5'];
+            let val = localCaseData[dataIndex].kelompok_umur["0-5"];
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -373,25 +373,25 @@ export default function TableProvince({...props}) {
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur['6-18'];
+            let val = localCaseData[dataIndex].kelompok_umur["6-18"];
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -406,25 +406,25 @@ export default function TableProvince({...props}) {
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur['19-30'];
+            let val = localCaseData[dataIndex].kelompok_umur["19-30"];
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -439,25 +439,25 @@ export default function TableProvince({...props}) {
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur['31-45'];
+            let val = localCaseData[dataIndex].kelompok_umur["31-45"];
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -472,25 +472,25 @@ export default function TableProvince({...props}) {
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur['46-59'];
+            let val = localCaseData[dataIndex].kelompok_umur["46-59"];
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -505,25 +505,25 @@ export default function TableProvince({...props}) {
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur['≥ 60'];
+            let val = localCaseData[dataIndex].kelompok_umur["≥ 60"];
             let x = (
-                <Text>
-                  <CountUp separator="," end={val}/>
-                </Text>
+              <Text>
+                <CountUp separator="," end={val} />
+              </Text>
             );
             return x;
           }
         },
         customHeadLabelRender: (columnMeta) => {
           let colHead = (
-              <Text
-                  color="gray.500"
-                  fontWeight="semibold"
-                  fontSize="0.8rem"
-                  textAlign="left"
-              >
-                {columnMeta.label.toUpperCase()}
-              </Text>
+            <Text
+              color="gray.500"
+              fontWeight="semibold"
+              fontSize="0.8rem"
+              textAlign="left"
+            >
+              {columnMeta.label.toUpperCase()}
+            </Text>
           );
           return colHead;
         },
@@ -533,18 +533,18 @@ export default function TableProvince({...props}) {
 
   async function getDataTable() {
     await fetch(
-        "https://apicovid19indonesia-v2.vercel.app/api/indonesia/provinsi/more"
+      "https://apicovid19indonesia-v2.vercel.app/api/indonesia/provinsi/more"
     )
-        .then((response) => response.json())
-        .then((data) => {
-          setLocalCaseData(data);
-          sessionStorage.setItem("data_provinsi", JSON.stringify(data));
-          //console.log("api", data);
-        })
-        .catch((error) => {
-          setApiError(error.toString());
-          //console.error("There was an in the API: ", error);
-        });
+      .then((response) => response.json())
+      .then((data) => {
+        setLocalCaseData(data);
+        sessionStorage.setItem("data_provinsi", JSON.stringify(data));
+        //console.log("api", data);
+      })
+      .catch((error) => {
+        setApiError(error.toString());
+        //console.error("There was an in the API: ", error);
+      });
   }
 
   useEffect(() => {
@@ -560,33 +560,28 @@ export default function TableProvince({...props}) {
   function isDataReady() {
     if (localCaseData) {
       return (
-          <DataTable
-              title={"Data Provinsi"}
-              data={localCaseData}
-              columns={cols}
-              options={options}
-          />
+        <DataTable
+          title={"Data Provinsi"}
+          data={localCaseData}
+          columns={cols}
+          options={options}
+        />
       );
     } else {
-      return <Loading minH="70vh"/>;
+      return <Loading minH="70vh" />;
     }
   }
 
   return (
-      <Box {...props}>
-        {apiError ? (
-            <Box my={10} bg="gray.100" borderRadius={10} p={5} align="center">
-              <Text color="yellow.500" fontSize="6xl" my={3}>
-                <MdReportProblem/>
-              </Text>
-              <Heading fontSize="lg">
-                Ada masalah di API untuk mengambil data provinsi.
-              </Heading>
-              <Text>Error: {apiError}</Text>
-            </Box>
-        ) : (
-            isDataReady()
-        )}
-      </Box>
+    <Box {...props}>
+      {apiError ? (
+        <ApiError
+          errorTitle="Ada masalah di API untuk mengambil data provinsi."
+          errorMessage={apiError}
+        />
+      ) : (
+        isDataReady()
+      )}
+    </Box>
   );
 }

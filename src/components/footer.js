@@ -86,15 +86,15 @@ export default function Footer() {
           <ModalCloseButton />
           <ModalBody>
             <VStack align="left">
-              {SOURCE_LINKS.map((data) => {
+              {SOURCE_LINKS.map((data, index) => {
                 return (
-                  <>
+                  <div key={index}>
                     <Text color="gray.500">{data.title}</Text>
                     <Link href={data.link} color="blue.500" isExternal>
                       {data.linkText}
                     </Link>
                     <Divider />
-                  </>
+                  </div>
                 );
               })}
             </VStack>

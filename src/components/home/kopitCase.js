@@ -10,56 +10,10 @@ import {
   SimpleGrid,
   SkeletonText,
 } from "@chakra-ui/react";
-
-import { RiVirusFill, RiSurgicalMaskFill } from "react-icons/ri";
-
-import { GiTombstone } from "react-icons/gi";
+import { RiSurgicalMaskFill } from "react-icons/ri";
 import CountUp from "react-countup";
 
-export default function Vaccination({ caseData, changesCounter, ...props }) {
-  let todayArr = [];
-  let today, dMin1;
-  //rearranging and adding data key value for easy looping
-  if (caseData) {
-    let localData = JSON.parse(JSON.stringify(caseData));
-    today = localData.pop();
-    dMin1 = localData.pop();
-    todayArr = [
-      {
-        iconBg: "red.100",
-        iconColor: "red.500",
-        icon: <RiVirusFill />,
-        cardTitle: "TOTAL KASUS POSITIF",
-        data: today.positif_kumulatif,
-        increaseArrowColor: "red.500",
-        decreaseArrowColor: "teal.500",
-        changes: {
-          totalYtd: today.positif,
-          percentage: changesCounter(
-            today.positif_kumulatif,
-            dMin1.positif_kumulatif
-          ),
-        },
-      },
-      {
-        iconBg: "gray.100",
-        iconColor: "gray.500",
-        icon: <GiTombstone />,
-        cardTitle: "TOTAL KEMATIAN",
-        data: today.meninggal_kumulatif,
-        increaseArrowColor: "red.500",
-        decreaseArrowColor: "teal.500",
-        changes: {
-          totalYtd: today.meninggal,
-          percentage: changesCounter(
-            today.meninggal_kumulatif,
-            dMin1.meninggal_kumulatif
-          ),
-        },
-      },
-    ];
-  }
-
+export default function Vaccination({ data, ...props }) {
   return (
     <Box {...props}>
       <HStack>
@@ -76,8 +30,8 @@ export default function Vaccination({ caseData, changesCounter, ...props }) {
         minChildWidth={["94%", "47%", "47%", "23.5%"]}
         spacing="2%"
       >
-        {today ? (
-          todayArr.map((key, index) => {
+        {data.length > 0 ? (
+          data.map((key, index) => {
             return (
               <Box
                 px={5}
@@ -145,10 +99,6 @@ export default function Vaccination({ caseData, changesCounter, ...props }) {
           </>
         )}
       </SimpleGrid>
-
-      {/* <Flex flexWrap="wrap" justifyContent="stretch">
-        
-      </Flex> */}
     </Box>
   );
 }

@@ -92,9 +92,14 @@ export default function Navbar({ tanggal }) {
         mt={{ base: 4, md: 0 }}
         spacing={3}
       >
-        {NAV_LINKS.map((data) => {
+        {NAV_LINKS.map((data, index) => {
           return (
-            <Link as={NavLink} activeStyle={ACTIVE_LINK} to={data.path}>
+            <Link
+              key={index}
+              as={NavLink}
+              activeStyle={ACTIVE_LINK}
+              to={data.path}
+            >
               {data.text}
             </Link>
           );

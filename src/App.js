@@ -1,12 +1,5 @@
-import { useEffect, useState } from "react";
-import {
-  Box,
-  Container,
-  ChakraProvider,
-  Flex,
-  Text,
-  Spinner,
-} from "@chakra-ui/react";
+import { useState } from "react";
+import { Box, Container, ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import Navbar from "./components/navbar/navbar";
@@ -22,42 +15,35 @@ function App() {
   const [error, setError] = useState("");
   const [tanggal, setTanggal] = useState();
 
-  function setData1(data) {
-    let temp;
-    data.forEach((element) => {
-      temp = new Date(element.tanggal);
-      element.tanggal = temp.toLocaleDateString("id-ID");
-    });
-    setTanggal(data[data.length - 1].tanggal);
-    setCaseData(data);
-  }
+  // function setData1(data) {
+  //   let temp;
+  //   data.forEach((element) => {
+  //     temp = new Date(element.tanggal);
+  //     element.tanggal = temp.toLocaleDateString("id-ID");
+  //   });
+  //   setTanggal(data[data.length - 1].tanggal);
+  //   setCaseData(data);
+  // }
 
-  function changesCounter(currentData, prevData) {
-    if (currentData && prevData) {
-      let res = ((currentData - prevData) / currentData) * 100;
-      return res.toFixed(2);
-    }
-  }
-
-  async function apiGet(apiURL, setter, queryParam = "") {
-    axios
-      .get(apiURL + queryParam)
-      .then((response) => {
-        //"res", response.data);
-        setter(response.data);
-      })
-      .catch((error) => {
-        setError(error.toString());
-        console.error("There was an error!", error);
-      });
-  }
-  useEffect(() => {
-    apiGet(
-      "https://apicovid19indonesia-v2.vercel.app/api/indonesia/harian",
-      setData1
-    );
-    apiGet("https://vaksincovid19-api.vercel.app/api/vaksin", setVaccination);
-  }, []);
+  // async function apiGet(apiURL, setter, queryParam = "") {
+  //   axios
+  //     .get(apiURL + queryParam)
+  //     .then((response) => {
+  //       //"res", response.data);
+  //       setter(response.data);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.toString());
+  //       console.error("There was an error!", error);
+  //     });
+  // }
+  // useEffect(() => {
+  //   apiGet(
+  //     "https://apicovid19indonesia-v2.vercel.app/api/indonesia/harian",
+  //     setData1
+  //   );
+  //   apiGet("https://vaksincovid19-api.vercel.app/api/vaksin", setVaccination);
+  // }, []);
 
   return (
     <ChakraProvider>
@@ -74,12 +60,7 @@ function App() {
                 <Info />
               </Route>
               <Route path="/home">
-                <Home
-                  caseData={caseData}
-                  vaccData={vaccination}
-                  changesCounter={changesCounter}
-                  error={error}
-                />
+                <Home />
               </Route>
               <Route exact path="/">
                 <Redirect to="/home" />

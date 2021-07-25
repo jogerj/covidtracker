@@ -11,52 +11,9 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { MdLocalHospital } from "react-icons/md";
-import { RiThermometerFill, RiHeartFill } from "react-icons/ri";
 import CountUp from "react-countup";
 
-export default function Mortality({ caseData, changesCounter, ...props }) {
-  let todayArr = [];
-  let today, dMin1;
-  if (caseData) {
-    let localData = JSON.parse(JSON.stringify(caseData));
-    today = localData.pop();
-    dMin1 = localData.pop();
-    todayArr = [
-      {
-        iconBg: "orange.100",
-        iconColor: "orange.500",
-        icon: <RiThermometerFill />,
-        cardTitle: "TOTAL RAWATAN",
-        data: today.dirawat_kumulatif,
-        increaseArrowColor: "red.500",
-        decreaseArrowColor: "teal.500",
-        changes: {
-          totalYtd: today.dirawat,
-          percentage: changesCounter(
-            today.dirawat_kumulatif,
-            dMin1.dirawat_kumulatif
-          ),
-        },
-      },
-      {
-        iconBg: "teal.100",
-        iconColor: "teal.500",
-        icon: <RiHeartFill />,
-        cardTitle: "TOTAL KESEMBUHAN",
-        data: today.sembuh_kumulatif,
-        increaseArrowColor: "teal.500",
-        decreaseArrowColor: "red.500",
-        changes: {
-          totalYtd: today.sembuh,
-          percentage: changesCounter(
-            today.sembuh_kumulatif,
-            dMin1.sembuh_kumulatif
-          ),
-        },
-      },
-    ];
-  }
-
+export default function Mortality({ data, ...props }) {
   return (
     <Box {...props}>
       <HStack pb={2}>
@@ -69,8 +26,8 @@ export default function Mortality({ caseData, changesCounter, ...props }) {
       </HStack>
 
       <SimpleGrid minChildWidth={["94%", "47%", "47%", "23.5%"]} spacing="2%">
-        {today ? (
-          todayArr.map((key, index) => {
+        {data.length > 0 ? (
+          data.map((key, index) => {
             return (
               <Box
                 px={5}

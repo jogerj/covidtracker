@@ -1,67 +1,147 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Text,
-  Heading,
   SimpleGrid,
   Stack,
   Link,
-  //List,
-  //ListItem,
-  //ListIcon,
   Button,
   Flex,
 } from "@chakra-ui/react";
-import KopitCase from "./kopitCase";
-import Vaccination from "./vaccination";
-import Hospitalization from "./hospitalization";
-import { MdReportProblem } from "react-icons/md";
-import DailyCase from "../charts/dailyCase";
-// import ProvinceChart from "../kemkesTableau/provinceChart";
-// import CityChart from "../kemkesTableau/cityChart";
-import KemkesCharts from "../kemkesTableau/kemkesCharts";
+import axios from "axios";
 import { NavLink } from "react-router-dom";
 import {
-  //RiWhatsappFill,
   RiCloseCircleLine,
-  //RiSearch2Line,
-  //RiPhoneFill,
   RiInformationFill,
+  RiVirusFill,
+  RiThermometerFill,
+  RiHeartFill,
 } from "react-icons/ri";
+import { GiTombstone } from "react-icons/gi";
+import ApiError from "../apiError/apiError";
+import KopitCase from "./kopitCase";
+import Hospitalization from "./hospitalization";
+import Vaccination from "./vaccination";
+import DailyCase from "../charts/dailyCase";
+import KemkesCharts from "../kemkesTableau/kemkesCharts";
 
-export default function Home({ caseData, changesCounter, vaccData, error }) {
+export default function Home() {
   const [showInfo, setShowInfo] = useState(true);
+  const [caseData, setCaseData] = useState([]);
+  const [hospiData, setHospiData] = useState([]);
+  const [apiError, setApiError] = useState();
+
+  function changesCounter(currentData, todayData) {
+    let res = (todayData / currentData) * 100;
+    return parseFloat(res.toFixed(2));
+  }
+
+  async function getCaseData() {
+    axios
+      .get("http://covidtracker-backend.vercel.app/api/national")
+      .then((response) => {
+        setCaseData([
+          {
+            iconBg: "red.100",
+            iconColor: "red.500",
+            icon: <RiVirusFill />,
+            cardTitle: "TOTAL KASUS POSITIF",
+            data: response.data.modifiedData.total.positive,
+            increaseArrowColor: "red.500",
+            decreaseArrowColor: "teal.500",
+            changes: {
+              totalYtd: response.data.modifiedData.update.positive,
+              percentage: changesCounter(
+                response.data.modifiedData.total.positive,
+                response.data.modifiedData.update.positive
+              ),
+            },
+          },
+          {
+            iconBg: "gray.100",
+            iconColor: "gray.500",
+            icon: <GiTombstone />,
+            cardTitle: "TOTAL KEMATIAN",
+            data: response.data.modifiedData.total.death,
+            increaseArrowColor: "red.500",
+            decreaseArrowColor: "teal.500",
+            changes: {
+              totalYtd: response.data.modifiedData.update.death,
+              percentage: changesCounter(
+                response.data.modifiedData.total.death,
+                response.data.modifiedData.update.death
+              ),
+            },
+          },
+        ]);
+
+        setHospiData([
+          {
+            iconBg: "orange.100",
+            iconColor: "orange.500",
+            icon: <RiThermometerFill />,
+            cardTitle: "TOTAL RAWATAN",
+            data: response.data.modifiedData.total.hospitalized,
+            increaseArrowColor: "red.500",
+            decreaseArrowColor: "teal.500",
+            changes: {
+              totalYtd: response.data.modifiedData.update.hospitalized,
+              percentage: changesCounter(
+                response.data.modifiedData.total.hospitalized,
+                response.data.modifiedData.update.hospitalized
+              ),
+            },
+          },
+          {
+            iconBg: "teal.100",
+            iconColor: "teal.500",
+            icon: <RiHeartFill />,
+            cardTitle: "TOTAL KESEMBUHAN",
+            data: response.data.modifiedData.total.recovered,
+            increaseArrowColor: "teal.500",
+            decreaseArrowColor: "red.500",
+            changes: {
+              totalYtd: response.data.modifiedData.update.recovered,
+              percentage: changesCounter(
+                response.data.modifiedData.total.recovered,
+                response.data.modifiedData.update.recovered
+              ),
+            },
+          },
+        ]);
+      })
+      .catch((error) => {
+        setApiError(error.toString());
+        console.error("There was an error!", error);
+      });
+  }
+
+  useEffect(() => {
+    getCaseData();
+  }, []);
 
   return (
     <>
       <Box>
-        {error ? (
-          <Box my={10} bg="gray.100" borderRadius={10} p={5} align="center">
-            <Text color="yellow.500" fontSize="6xl" my={3}>
-              <MdReportProblem />
-            </Text>
-            <Heading fontSize="lg">
-              Ada masalah di API untuk mengambil data kasus.
-            </Heading>
-            <Text>Error: {error}</Text>
-          </Box>
-        ) : (
-          <Box my={6}>
-            {showInfo && <InfoAlert setShowInfo={setShowInfo} />}
+        <Box my={6}>
+          {showInfo && <InfoAlert setShowInfo={setShowInfo} />}
+          {apiError ? (
+            <ApiError
+              errorTitle="Ada masalah di API untuk mengambil data kasus terbaru."
+              errorMessage={apiError}
+            />
+          ) : (
             <SimpleGrid
               minChildWidth={["94%", "94%", "94%", "47%"]}
               spacing={6}
             >
-              <KopitCase caseData={caseData} changesCounter={changesCounter} />
-              <Hospitalization
-                caseData={caseData}
-                changesCounter={changesCounter}
-              />
+              <KopitCase data={caseData} />
+              <Hospitalization data={hospiData} />
             </SimpleGrid>
-            <Vaccination mt={5} vaccData={vaccData} />
-            <DailyCase mainData={caseData} />
-          </Box>
-        )}
+          )}
+          {/* <Vaccination mt={5} /> */}
+          <DailyCase />
+        </Box>
         <Stack>
           <Text mt={5} fontSize="xl" fontWeight="bold">
             Statistik Kemenkes
@@ -83,7 +163,7 @@ function InfoAlert({ setShowInfo, ...props }) {
               <RiInformationFill />
             </Text>
             <Text fontWeight="bold">
-              Butuh bantuan donor darah, oxygen, info RS, dll?
+              Butuh bantuan donor darah, oksigen, info rumah sakit, dll?
             </Text>
           </Flex>
           <Flex>
@@ -101,68 +181,9 @@ function InfoAlert({ setShowInfo, ...props }) {
           </Flex>
         </Flex>
         <Link as={NavLink} to="/info">
-          Click tautan ini untuk cari informasi/buka halaman "Info Bantuan"
+          Klik tautan ini untuk cari informasi/buka halaman "Info Bantuan"
         </Link>
-        {/* <InfoStack /> */}
       </Stack>
     </Box>
   );
 }
-
-// function InfoStack() {
-//   return (
-//     <Stack spacing={0}>
-//       <Text>
-//         <List>
-//           <Stack mt={2} spacing={[4, 1]}>
-//             <ListItem>
-//               <ListIcon as={RiPhoneFill} color="teal.500" fontSize="1.3rem" />
-//               <Text as="u">
-//                 <Link href="tel:119p9">
-//                   Hotline telpon Kemenkes (119 extension 9)
-//                 </Link>
-//               </Text>
-//             </ListItem>
-//             <ListItem>
-//               <ListIcon as={RiPhoneFill} color="teal.500" fontSize="1.3rem" />
-//               <Text as="u">
-//                 <Link href="tel:117p5">
-//                   Hotline Contact Center BNPB, Donor Konvalesen (117 extension
-//                   5)
-//                 </Link>
-//               </Text>
-//             </ListItem>
-//             <ListItem>
-//               <ListIcon as={RiSearch2Line} color="teal.500" fontSize="1.3rem" />
-//               <Text as="u">
-//                 <Link
-//                   href="https://www.wargabantuwarga.com"
-//                   target="_blank"
-//                   rel="noreferrer"
-//                 >
-//                   Website informasi COVID oleh tim WargaBantuWarga.com
-//                 </Link>
-//               </Text>
-//             </ListItem>
-//             <ListItem>
-//               <ListIcon
-//                 as={RiWhatsappFill}
-//                 color="teal.500"
-//                 fontSize="1.3rem"
-//               />
-//               <Text as="u">
-//                 <Link
-//                   href="https://api.whatsapp.com/send/?phone=6281257579812&text&app_absent=0"
-//                   target="_blank"
-//                   rel="noreferrer"
-//                 >
-//                   Hotline chat WhatsApp WargaBantuWarga
-//                 </Link>
-//               </Text>
-//             </ListItem>
-//           </Stack>
-//         </List>
-//       </Text>
-//     </Stack>
-//   );
-// }
