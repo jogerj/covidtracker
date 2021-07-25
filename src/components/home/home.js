@@ -39,7 +39,7 @@ export default function Home({ setTanggal }) {
   useEffect(() => {
     async function getCaseData() {
       await axios
-        .get("http://covidtracker-backend.vercel.app/api/national")
+        .get("https://covidtracker-vincenth19-be.herokuapp.com/api/national")
         .then((response) => {
           setTanggal(response.data.modifiedData.update.updateDate);
           setCaseData([

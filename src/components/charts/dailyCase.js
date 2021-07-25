@@ -29,7 +29,9 @@ export default function DailyCase({ ...props }) {
   useEffect(() => {
     async function getDailyData() {
       await axios
-        .get("http://covidtracker-backend.vercel.app/api/national/all_daily")
+        .get(
+          "https://covidtracker-vincenth19-be.herokuapp.com/api/national/all_daily"
+        )
         .then((response) => {
           setChartData(response.data.modifiedData);
         })
