@@ -19,7 +19,7 @@ export default function TableProvince({ ...props }) {
   };
   const cols = [
     {
-      name: "provinsi",
+      name: "provinceName",
       label: "Provinsi",
       options: {
         draggable: false,
@@ -42,14 +42,14 @@ export default function TableProvince({ ...props }) {
       },
     },
     {
-      name: "kasus",
+      name: "total.positive",
       label: "Kasus",
       options: {
         sort: true,
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kasus;
+            let val = localCaseData[dataIndex].total.positive;
             let x = (
               <Text>
                 <CountUp separator="," end={val} />
@@ -74,14 +74,14 @@ export default function TableProvince({ ...props }) {
       },
     },
     {
-      name: "penambahan.positif",
+      name: "update.positive",
       label: "Kasus per Hari",
       options: {
         sort: true,
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].penambahan.positif;
+            let val = localCaseData[dataIndex].update.positive;
             let x = (
               <Text>
                 <CountUp separator="," end={val} />
@@ -106,14 +106,14 @@ export default function TableProvince({ ...props }) {
       },
     },
     {
-      name: "dirawat",
+      name: "total.hospitalized",
       label: "Dirawat",
       options: {
         sort: true,
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].dirawat;
+            let val = localCaseData[dataIndex].total.hospitalized;
             let x = (
               <Text>
                 <CountUp separator="," end={val} />
@@ -138,14 +138,14 @@ export default function TableProvince({ ...props }) {
       },
     },
     {
-      name: "sembuh",
+      name: "total.recovered",
       label: "Sembuh",
       options: {
         sort: true,
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].sembuh;
+            let val = localCaseData[dataIndex].total.recovered;
             let x = (
               <Text>
                 <CountUp separator="," end={val} />
@@ -170,14 +170,14 @@ export default function TableProvince({ ...props }) {
       },
     },
     {
-      name: "penambahan.sembuh",
+      name: "update.recovered",
       label: "Sembuh per Hari",
       options: {
         sort: true,
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].penambahan.sembuh;
+            let val = localCaseData[dataIndex].update.recovered;
             let x = (
               <Text>
                 <CountUp separator="," end={val} />
@@ -202,14 +202,14 @@ export default function TableProvince({ ...props }) {
       },
     },
     {
-      name: "meninggal",
+      name: "total.death",
       label: "Meninggal",
       options: {
         sort: true,
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].meninggal;
+            let val = localCaseData[dataIndex].total.death;
             let x = (
               <Text>
                 <CountUp separator="," end={val} />
@@ -234,278 +234,14 @@ export default function TableProvince({ ...props }) {
       },
     },
     {
-      name: "penambahan.meninggal",
+      name: "update.death",
       label: "Meninggal per Hari",
       options: {
         sort: true,
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].penambahan.meninggal;
-            let x = (
-              <Text>
-                <CountUp separator="," end={val} />
-              </Text>
-            );
-            return x;
-          }
-        },
-        customHeadLabelRender: (columnMeta) => {
-          let colHead = (
-            <Text
-              color="gray.500"
-              fontWeight="semibold"
-              fontSize="0.8rem"
-              textAlign="left"
-            >
-              {columnMeta.label.toUpperCase()}
-            </Text>
-          );
-          return colHead;
-        },
-      },
-    },
-    {
-      name: "jenis_kelamin.laki-laki",
-      label: "Laki-laki",
-      options: {
-        display: false,
-        sort: true,
-        filter: false,
-        customBodyRenderLite: (dataIndex) => {
-          if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].jenis_kelamin["laki-laki"];
-            let x = (
-              <Text>
-                <CountUp separator="," end={val} />
-              </Text>
-            );
-            return x;
-          }
-        },
-        customHeadLabelRender: (columnMeta) => {
-          let colHead = (
-            <Text
-              color="gray.500"
-              fontWeight="semibold"
-              fontSize="0.8rem"
-              textAlign="left"
-            >
-              {columnMeta.label.toUpperCase()}
-            </Text>
-          );
-          return colHead;
-        },
-      },
-    },
-    {
-      name: "jenis_kelamin.perempuan",
-      label: "Perempuan",
-      options: {
-        display: false,
-        sort: true,
-        filter: false,
-        customBodyRenderLite: (dataIndex) => {
-          if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].jenis_kelamin["perempuan"];
-            let x = (
-              <Text>
-                <CountUp separator="," end={val} />
-              </Text>
-            );
-            return x;
-          }
-        },
-        customHeadLabelRender: (columnMeta) => {
-          let colHead = (
-            <Text
-              color="gray.500"
-              fontWeight="semibold"
-              fontSize="0.8rem"
-              textAlign="left"
-            >
-              {columnMeta.label.toUpperCase()}
-            </Text>
-          );
-          return colHead;
-        },
-      },
-    },
-    {
-      name: "kelompok_umur.0-5",
-      label: "0-5 th",
-      options: {
-        display: false,
-        sort: true,
-        filter: false,
-        customBodyRenderLite: (dataIndex) => {
-          if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur["0-5"];
-            let x = (
-              <Text>
-                <CountUp separator="," end={val} />
-              </Text>
-            );
-            return x;
-          }
-        },
-        customHeadLabelRender: (columnMeta) => {
-          let colHead = (
-            <Text
-              color="gray.500"
-              fontWeight="semibold"
-              fontSize="0.8rem"
-              textAlign="left"
-            >
-              {columnMeta.label.toUpperCase()}
-            </Text>
-          );
-          return colHead;
-        },
-      },
-    },
-    {
-      name: "kelompok_umur.6-18",
-      label: "6-18 th",
-      options: {
-        display: false,
-        sort: true,
-        filter: false,
-        customBodyRenderLite: (dataIndex) => {
-          if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur["6-18"];
-            let x = (
-              <Text>
-                <CountUp separator="," end={val} />
-              </Text>
-            );
-            return x;
-          }
-        },
-        customHeadLabelRender: (columnMeta) => {
-          let colHead = (
-            <Text
-              color="gray.500"
-              fontWeight="semibold"
-              fontSize="0.8rem"
-              textAlign="left"
-            >
-              {columnMeta.label.toUpperCase()}
-            </Text>
-          );
-          return colHead;
-        },
-      },
-    },
-    {
-      name: "kelompok_umur.19-30",
-      label: "19-30 th",
-      options: {
-        display: false,
-        sort: true,
-        filter: false,
-        customBodyRenderLite: (dataIndex) => {
-          if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur["19-30"];
-            let x = (
-              <Text>
-                <CountUp separator="," end={val} />
-              </Text>
-            );
-            return x;
-          }
-        },
-        customHeadLabelRender: (columnMeta) => {
-          let colHead = (
-            <Text
-              color="gray.500"
-              fontWeight="semibold"
-              fontSize="0.8rem"
-              textAlign="left"
-            >
-              {columnMeta.label.toUpperCase()}
-            </Text>
-          );
-          return colHead;
-        },
-      },
-    },
-    {
-      name: "kelompok_umur.31-45",
-      label: "31-45 th",
-      options: {
-        display: false,
-        sort: true,
-        filter: false,
-        customBodyRenderLite: (dataIndex) => {
-          if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur["31-45"];
-            let x = (
-              <Text>
-                <CountUp separator="," end={val} />
-              </Text>
-            );
-            return x;
-          }
-        },
-        customHeadLabelRender: (columnMeta) => {
-          let colHead = (
-            <Text
-              color="gray.500"
-              fontWeight="semibold"
-              fontSize="0.8rem"
-              textAlign="left"
-            >
-              {columnMeta.label.toUpperCase()}
-            </Text>
-          );
-          return colHead;
-        },
-      },
-    },
-    {
-      name: "kelompok_umur.46-59",
-      label: "46-59 th",
-      options: {
-        display: false,
-        sort: true,
-        filter: false,
-        customBodyRenderLite: (dataIndex) => {
-          if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur["46-59"];
-            let x = (
-              <Text>
-                <CountUp separator="," end={val} />
-              </Text>
-            );
-            return x;
-          }
-        },
-        customHeadLabelRender: (columnMeta) => {
-          let colHead = (
-            <Text
-              color="gray.500"
-              fontWeight="semibold"
-              fontSize="0.8rem"
-              textAlign="left"
-            >
-              {columnMeta.label.toUpperCase()}
-            </Text>
-          );
-          return colHead;
-        },
-      },
-    },
-    {
-      name: "kelompok_umur.≥ 60",
-      label: "≥ 60 th",
-      options: {
-        display: false,
-        sort: true,
-        filter: false,
-        customBodyRenderLite: (dataIndex) => {
-          if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].kelompok_umur["≥ 60"];
+            let val = localCaseData[dataIndex].total.death;
             let x = (
               <Text>
                 <CountUp separator="," end={val} />
@@ -532,13 +268,14 @@ export default function TableProvince({ ...props }) {
   ];
 
   async function getDataTable() {
-    await fetch(
-      "https://apicovid19indonesia-v2.vercel.app/api/indonesia/provinsi/more"
-    )
+    await fetch("http://covidtracker-backend.vercel.app/api/province/more")
       .then((response) => response.json())
       .then((data) => {
-        setLocalCaseData(data);
-        sessionStorage.setItem("data_provinsi", JSON.stringify(data));
+        setLocalCaseData(data.modifiedData.provinces);
+        sessionStorage.setItem(
+          "data_provinsi",
+          JSON.stringify(data.modifiedData.provinces)
+        );
         //console.log("api", data);
       })
       .catch((error) => {
