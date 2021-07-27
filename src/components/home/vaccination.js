@@ -10,24 +10,24 @@ import {
   StatNumber,
   SkeletonText,
   SimpleGrid,
-  StatHelpText,
+  StatArrow,
 } from "@chakra-ui/react";
 import { RiSyringeFill } from "react-icons/ri";
 import { BiTargetLock } from "react-icons/bi";
 import CountUp from "react-countup";
 import ApiError from "../apiError/apiError";
 
-export default function Vaccination({ ...props }) {
+export default function Vaccination({ changesCounter, ...props }) {
   const [vaccData, setVaccData] = useState([]);
   const [apiError, setApiError] = useState();
 
   useEffect(() => {
     async function getVaccData() {
       await axios
-        .get("https://cekdiri.id/vaksinasi/")
+        .get(
+          "https://covidtracker-vincenth19-be.herokuapp.com/api/vaccination/"
+        )
         .then((response) => {
-          const DATA_TODAY =
-            response.data.monitoring[response.data.monitoring.length - 1];
           setVaccData([
             {
               iconBg: "blue.100",
@@ -36,8 +36,11 @@ export default function Vaccination({ ...props }) {
               icon: <BiTargetLock />,
               marginx: "0",
               cardTitle: "TARGET VAKSINASI NASIONAL",
-              data: DATA_TODAY.total_sasaran_vaksinasi,
-              helperText: "-",
+              data: 208265720,
+              changes: {
+                totalYtd: null,
+                percentage: null,
+              },
             },
             {
               iconBg: "purple.100",
@@ -45,9 +48,17 @@ export default function Vaccination({ ...props }) {
               fontSize: "1.4rem",
               icon: <strong>1</strong>,
               marginx: "10px",
-              cardTitle: "TOTAL VAKSINASI DOSIS 1",
-              data: DATA_TODAY.vaksinasi1,
-              helperText: parseFloat(DATA_TODAY.cakupan.vaksinasi1),
+              increaseArrowColor: "teal.500",
+              decreaseArrowColor: "red.500",
+              cardTitle: "TOTAL VAKSINASI 1+ DOSIS ",
+              data: response.data.total.dose1plus,
+              changes: {
+                totalYtd: response.data.update.dose1,
+                percentage: changesCounter(
+                  response.data.total.dose1,
+                  response.data.update.dose1
+                ),
+              },
             },
             {
               iconBg: "purple.100",
@@ -55,9 +66,17 @@ export default function Vaccination({ ...props }) {
               fontSize: "1.4rem",
               icon: <strong>2</strong>,
               marginx: "10px",
+              increaseArrowColor: "teal.500",
+              decreaseArrowColor: "red.500",
               cardTitle: "TOTAL VAKSINASI DOSIS 2",
-              data: DATA_TODAY.vaksinasi2,
-              helperText: parseFloat(DATA_TODAY.cakupan.vaksinasi2),
+              data: response.data.total.dose2,
+              changes: {
+                totalYtd: response.data.update.dose2,
+                percentage: changesCounter(
+                  response.data.total.dose2,
+                  response.data.update.dose2
+                ),
+              },
             },
           ]);
         })
@@ -115,15 +134,45 @@ export default function Vaccination({ ...props }) {
                       <StatNumber>
                         <CountUp separator="." end={key.data} />
                       </StatNumber>
-                      <StatHelpText>
-                        <CountUp
-                          separator="."
-                          decimal=","
-                          decimals={2}
-                          end={key.helperText}
-                        />
-                        {index !== 0 ? "%" : null}
-                      </StatHelpText>
+                      <Flex alignItems="center" fontSize="0.8rem">
+                        {key.changes.percentage === null ? null : key.changes
+                            .percentage > 0 ? (
+                          <StatArrow
+                            type="increase"
+                            color={key.increaseArrowColor}
+                          />
+                        ) : (
+                          <StatArrow
+                            type="decrease"
+                            color={key.decreaseArrowColor}
+                          />
+                        )}
+                        <Flex color="gray.600">
+                          <Text>
+                            {key.changes.totalYtd && (
+                              <CountUp
+                                separator="."
+                                end={key.changes.totalYtd}
+                              />
+                            )}
+                          </Text>
+                          <Text ml={1}>
+                            {key.changes.percentage && (
+                              <>
+                                {"("}
+                                <CountUp
+                                  separator="."
+                                  decimal=","
+                                  decimals={2}
+                                  suffix="%"
+                                  end={key.changes.percentage}
+                                />
+                                {")"}
+                              </>
+                            )}
+                          </Text>
+                        </Flex>
+                      </Flex>
                     </Stat>
                   </Flex>
                 </Box>

@@ -33,7 +33,7 @@ export default function DailyCase({ ...props }) {
           "https://covidtracker-vincenth19-be.herokuapp.com/api/national/all_daily"
         )
         .then((response) => {
-          setChartData(response.data.modifiedData);
+          setChartData(response.data);
         })
         .catch((error) => {
           setApiError(error.toString());

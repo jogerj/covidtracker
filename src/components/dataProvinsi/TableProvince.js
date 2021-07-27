@@ -271,11 +271,8 @@ export default function TableProvince({ ...props }) {
     await fetch("https://covidtracker-backend.vercel.app/api/province/more")
       .then((response) => response.json())
       .then((data) => {
-        setLocalCaseData(data.modifiedData.provinces);
-        sessionStorage.setItem(
-          "data_provinsi",
-          JSON.stringify(data.modifiedData.provinces)
-        );
+        setLocalCaseData(data.provinces);
+        sessionStorage.setItem("data_provinsi", JSON.stringify(data.provinces));
         //console.log("api", data);
       })
       .catch((error) => {

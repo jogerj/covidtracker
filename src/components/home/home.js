@@ -41,21 +41,21 @@ export default function Home({ setTanggal }) {
       await axios
         .get("https://covidtracker-vincenth19-be.herokuapp.com/api/national")
         .then((response) => {
-          setTanggal(response.data.modifiedData.update.updateDate);
+          setTanggal(response.data.updateDate);
           setCaseData([
             {
               iconBg: "red.100",
               iconColor: "red.500",
               icon: <RiVirusFill />,
               cardTitle: "TOTAL KASUS POSITIF",
-              data: response.data.modifiedData.total.positive,
+              data: response.data.total.positive,
               increaseArrowColor: "red.500",
               decreaseArrowColor: "teal.500",
               changes: {
-                totalYtd: response.data.modifiedData.update.positive,
+                totalYtd: response.data.update.positive,
                 percentage: changesCounter(
-                  response.data.modifiedData.total.positive,
-                  response.data.modifiedData.update.positive
+                  response.data.total.positive,
+                  response.data.update.positive
                 ),
               },
             },
@@ -64,14 +64,14 @@ export default function Home({ setTanggal }) {
               iconColor: "gray.500",
               icon: <GiTombstone />,
               cardTitle: "TOTAL KEMATIAN",
-              data: response.data.modifiedData.total.death,
+              data: response.data.total.death,
               increaseArrowColor: "red.500",
               decreaseArrowColor: "teal.500",
               changes: {
-                totalYtd: response.data.modifiedData.update.death,
+                totalYtd: response.data.update.death,
                 percentage: changesCounter(
-                  response.data.modifiedData.total.death,
-                  response.data.modifiedData.update.death
+                  response.data.total.death,
+                  response.data.update.death
                 ),
               },
             },
@@ -83,14 +83,14 @@ export default function Home({ setTanggal }) {
               iconColor: "orange.500",
               icon: <RiThermometerFill />,
               cardTitle: "TOTAL RAWATAN",
-              data: response.data.modifiedData.total.hospitalized,
+              data: response.data.total.hospitalized,
               increaseArrowColor: "red.500",
               decreaseArrowColor: "teal.500",
               changes: {
-                totalYtd: response.data.modifiedData.update.hospitalized,
+                totalYtd: response.data.update.hospitalized,
                 percentage: changesCounter(
-                  response.data.modifiedData.total.hospitalized,
-                  response.data.modifiedData.update.hospitalized
+                  response.data.total.hospitalized,
+                  response.data.update.hospitalized
                 ),
               },
             },
@@ -99,14 +99,14 @@ export default function Home({ setTanggal }) {
               iconColor: "teal.500",
               icon: <RiHeartFill />,
               cardTitle: "TOTAL KESEMBUHAN",
-              data: response.data.modifiedData.total.recovered,
+              data: response.data.total.recovered,
               increaseArrowColor: "teal.500",
               decreaseArrowColor: "red.500",
               changes: {
-                totalYtd: response.data.modifiedData.update.recovered,
+                totalYtd: response.data.update.recovered,
                 percentage: changesCounter(
-                  response.data.modifiedData.total.recovered,
-                  response.data.modifiedData.update.recovered
+                  response.data.total.recovered,
+                  response.data.update.recovered
                 ),
               },
             },
@@ -140,7 +140,7 @@ export default function Home({ setTanggal }) {
               <Hospitalization data={hospiData} />
             </SimpleGrid>
           )}
-          <Vaccination mt={5} />
+          <Vaccination mt={5} changesCounter={changesCounter} />
           <DailyCase />
         </Box>
         <Stack>
