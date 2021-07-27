@@ -23,19 +23,10 @@ export default function Footer() {
   const SOURCE_LINKS = useMemo(
     () => [
       {
-        title: "Kasus, kematian, rawatan, kesembuhan:",
-        link: "https://github.com/Reynadi531/api-covid19-indonesia-v2",
-        linkText: "API dari Reynadi, sumber dari pemerintah Indonesia",
-      },
-      {
-        title: "Vaksinasi:",
-        link: "https://vaksincovid19-api.vercel.app/api/",
-        linkText: "Web Scraping API dari website Kemenkes oleh Reynadi",
-      },
-      {
-        title: "Data provinsi:",
-        link: "https://github.com/Reynadi531/api-covid19-indonesia-v2",
-        linkText: "API dari Reynadi, sumber dari pemerintah Indonesia",
+        title:
+          "Kasus, kematian, rawatan, kesembuhan, vaksinasi, data provinsi:",
+        link: "https://github.com/vincenth19/covidtracker-backend",
+        linkText: "API sendiri, data diambil dari Pemerintah Indonesia",
       },
     ],
     []

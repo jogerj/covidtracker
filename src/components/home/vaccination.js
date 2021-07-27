@@ -68,7 +68,7 @@ export default function Vaccination({ changesCounter, ...props }) {
               marginx: "10px",
               increaseArrowColor: "teal.500",
               decreaseArrowColor: "red.500",
-              cardTitle: "TOTAL VAKSINASI DOSIS 2",
+              cardTitle: "TOTAL VAKSINASI 2 DOSIS",
               data: response.data.total.dose2,
               changes: {
                 totalYtd: response.data.update.dose2,
@@ -87,7 +87,7 @@ export default function Vaccination({ changesCounter, ...props }) {
     }
 
     getVaccData();
-  }, []);
+  }, [changesCounter]);
 
   if (apiError) {
     return <ApiError errorTitle="" errorMessage={apiError} />;
