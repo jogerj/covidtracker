@@ -106,7 +106,7 @@ export default function Vaccination({ changesCounter, ...props }) {
           minChildWidth={{ lg: "32%", md: "100%", sm: "100%", base: "100%" }}
           spacing="2%"
         >
-          {vaccData ? (
+          {vaccData.length > 0 ? (
             vaccData.map((key, index) => {
               return (
                 <Box
