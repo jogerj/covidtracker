@@ -3,7 +3,7 @@ import { Text, Box } from "@chakra-ui/react";
 import DataTable, { debounceSearchRender } from "mui-datatables";
 import CountUp from "react-countup";
 import Loading from "../loading";
-import ApiError from "../apiError/apiError";
+import ApiError from "../shared_comp/apiError/apiError";
 
 export default function TableProvince({ ...props }) {
   const [localCaseData, setLocalCaseData] = useState();
