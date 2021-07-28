@@ -241,7 +241,7 @@ export default function TableProvince({ ...props }) {
         filter: false,
         customBodyRenderLite: (dataIndex) => {
           if (dataIndex <= 33) {
-            let val = localCaseData[dataIndex].total.death;
+            let val = localCaseData[dataIndex].update.death;
             let x = (
               <Text>
                 <CountUp separator="," end={val} />
