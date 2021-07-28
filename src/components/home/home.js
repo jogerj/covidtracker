@@ -18,12 +18,16 @@ import {
   RiHeartFill,
 } from "react-icons/ri";
 import { GiTombstone } from "react-icons/gi";
-import ApiError from "../apiError/apiError";
+import ApiError from "../shared_comp/apiError/apiError";
 import KopitCase from "./kopitCase";
 import Hospitalization from "./hospitalization";
 import Vaccination from "./vaccination";
 import DailyCase from "../charts/dailyCase";
 import KemkesCharts from "../kemkesTableau/kemkesCharts";
+import RiskProfile from "./riskProfile";
+import DailyVacc from "../charts/dailyVacc";
+import DailyTesting from "../charts/dailyTesting";
+import Testing from "./testing";
 
 export default function Home({ setTanggal }) {
   const [showInfo, setShowInfo] = useState(true);
@@ -82,7 +86,7 @@ export default function Home({ setTanggal }) {
               iconBg: "orange.100",
               iconColor: "orange.500",
               icon: <RiThermometerFill />,
-              cardTitle: "TOTAL RAWATAN",
+              cardTitle: "TOTAL KASUS AKTIF",
               data: response.data.total.hospitalized,
               increaseArrowColor: "red.500",
               decreaseArrowColor: "teal.500",
@@ -141,7 +145,11 @@ export default function Home({ setTanggal }) {
             </SimpleGrid>
           )}
           <Vaccination mt={5} changesCounter={changesCounter} />
+          <RiskProfile />
+          <Testing changesCounter={changesCounter} />
           <DailyCase />
+          <DailyVacc />
+          <DailyTesting />
         </Box>
         <Stack>
           <Text mt={5} fontSize="xl" fontWeight="bold">

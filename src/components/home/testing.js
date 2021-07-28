@@ -12,73 +12,50 @@ import {
   SimpleGrid,
   StatArrow,
 } from "@chakra-ui/react";
-import { RiSyringeFill } from "react-icons/ri";
-import { BiTargetLock } from "react-icons/bi";
+import { RiTestTubeFill } from "react-icons/ri";
 import CountUp from "react-countup";
 import ApiError from "../shared_comp/apiError/apiError";
 
-export default function Vaccination({ changesCounter, ...props }) {
-  const [vaccData, setVaccData] = useState([]);
+export default function RiskProfile({ changesCounter, ...props }) {
+  const [testingData, setTestingData] = useState();
   const [apiError, setApiError] = useState();
-  const VACC_TARGET = 208265720;
 
   useEffect(() => {
-    async function getVaccData() {
+    async function getRiskData() {
       await axios
-        .get(
-          "https://covidtracker-vincenth19-be.herokuapp.com/api/vaccination/"
-        )
+        .get("https://covidtracker-vincenth19-be.herokuapp.com/api/testing/")
         .then((response) => {
-          setVaccData([
+          setTestingData([
             {
-              iconBg: "blue.100",
-              iconColor: "blue.500",
-              fontSize: "2rem",
-              icon: <BiTargetLock />,
-              marginx: "0",
-              cardTitle: "TARGET VAKSINASI NASIONAL",
-              data: VACC_TARGET,
+              cardTitle: "TOTAL TES",
+              data: response.data.total.all,
               changes: {
-                totalYtd: null,
+                totalYtd: response.data.update.all,
                 percentage: changesCounter(
-                  VACC_TARGET,
-                  response.data.total.dose1plus
+                  response.data.total.all,
+                  response.data.update.all
                 ),
               },
             },
             {
-              iconBg: "purple.100",
-              iconColor: "purple.500",
-              fontSize: "1.4rem",
-              icon: <strong>1</strong>,
-              marginx: "10px",
-              increaseArrowColor: "teal.500",
-              decreaseArrowColor: "red.500",
-              cardTitle: "TOTAL VAKSINASI 1+ DOSIS ",
-              data: response.data.total.dose1plus,
+              cardTitle: "TOTAL TES PCR + TCM",
+              data: response.data.total.pcrTcm,
               changes: {
-                totalYtd: response.data.update.dose1,
+                totalYtd: response.data.update.pcrTcm,
                 percentage: changesCounter(
-                  response.data.total.dose1,
-                  response.data.update.dose1
+                  response.data.total.pcrTcm,
+                  response.data.update.pcrTcm
                 ),
               },
             },
             {
-              iconBg: "purple.100",
-              iconColor: "purple.500",
-              fontSize: "1.4rem",
-              icon: <strong>2</strong>,
-              marginx: "10px",
-              increaseArrowColor: "teal.500",
-              decreaseArrowColor: "red.500",
-              cardTitle: "TOTAL VAKSINASI 2 DOSIS",
-              data: response.data.total.dose2,
+              cardTitle: "TOTAL TES ANTIGEN",
+              data: response.data.total.antigen,
               changes: {
-                totalYtd: response.data.update.dose2,
+                totalYtd: response.data.update.antigen,
                 percentage: changesCounter(
-                  response.data.total.dose2,
-                  response.data.update.dose2
+                  response.data.total.antigen,
+                  response.data.update.antigen
                 ),
               },
             },
@@ -90,28 +67,28 @@ export default function Vaccination({ changesCounter, ...props }) {
         });
     }
 
-    getVaccData();
-  }, [changesCounter]);
+    getRiskData();
+  }, []);
 
   if (apiError) {
     return <ApiError errorTitle="" errorMessage={apiError} />;
   } else {
     return (
-      <Box {...props}>
+      <Box mt={5} {...props}>
         <HStack pb={2}>
-          <Text fontSize="4xl" color="blue.400">
-            <RiSyringeFill />
+          <Text fontSize="4xl" color="teal.600">
+            <RiTestTubeFill />
           </Text>
           <Text fontSize="lg">
-            <strong>Vaksinasi</strong>
+            <strong>Testing</strong>
           </Text>
         </HStack>
         <SimpleGrid
           minChildWidth={{ lg: "32%", md: "100%", sm: "100%", base: "100%" }}
           spacing="2%"
         >
-          {vaccData.length > 0 ? (
-            vaccData.map((key, index) => {
+          {testingData ? (
+            testingData.map((key, index) => {
               return (
                 <Box
                   px={5}
@@ -122,15 +99,6 @@ export default function Vaccination({ changesCounter, ...props }) {
                   key={index}
                 >
                   <Flex alignContent="center" align="center">
-                    <Box p={2} bg={key.iconBg} borderRadius={10} mr={4}>
-                      <Text
-                        fontSize={key.fontSize}
-                        color={key.iconColor}
-                        mx={key.marginx}
-                      >
-                        {key.icon}
-                      </Text>
-                    </Box>
                     <Stat>
                       <StatLabel fontSize="0.65em" color="gray.500">
                         {key.cardTitle}
@@ -139,20 +107,7 @@ export default function Vaccination({ changesCounter, ...props }) {
                         <CountUp separator="." end={key.data} />
                       </StatNumber>
                       <Flex alignItems="center" fontSize="0.8rem">
-                        {key.changes.percentage === null ? null : key.changes
-                            .percentage > 0 ? (
-                          key.data !== VACC_TARGET && (
-                            <StatArrow
-                              type="increase"
-                              color={key.increaseArrowColor}
-                            />
-                          )
-                        ) : (
-                          <StatArrow
-                            type="decrease"
-                            color={key.decreaseArrowColor}
-                          />
-                        )}
+                        <StatArrow type="increase" color="teal.500" />
                         <Flex color="gray.600">
                           <Text>
                             {key.changes.totalYtd && (

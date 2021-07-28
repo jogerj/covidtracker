@@ -24,7 +24,7 @@ export default function DailyCase({ ...props }) {
     async function getDailyData() {
       await axios
         .get(
-          "https://covidtracker-vincenth19-be.herokuapp.com/api/national/all_daily"
+          "https://covidtracker-vincenth19-be.herokuapp.com/api/vaccination/all_daily"
         )
         .then((response) => {
           setChartData(response.data);
@@ -48,10 +48,8 @@ export default function DailyCase({ ...props }) {
     return (
       <Box mt={5} {...props}>
         <Text mb={3} fontSize="xl" fontWeight="bold">
-          Grafik Gabungan{" "}
-          {quantity === "harian"
-            ? "Perkembangan Kasus Per Hari"
-            : "Perkembangan Kasus Secara Kumulatif"}
+          Grafik Semua Vaksinasi{" "}
+          {quantity === "harian" ? "Per Hari" : "Secara Kumulatif"}
         </Text>
         <Radios
           radioOptions={["harian", "kumulatif"]}
@@ -156,54 +154,24 @@ function Chart({ data, quantity, error }) {
           />
           <Line
             type="monotone"
-            name="Kasus"
-            dataKey={
-              quantity === "harian" ? "update.positive" : "total.positive"
-            }
-            strokeOpacity={opacity.positif}
-            stroke="#E53E3E"
+            name="1 Dosis"
+            dataKey={quantity === "harian" ? "update.dose1" : "total.dose1"}
+            strokeOpacity={opacity.dose1}
             strokeWidth={2}
+            stroke="#1665C0"
             dot={false}
-            hide={hidden.positif}
+            //hide={hidden.positif}
             isAnimationActive={false}
           />
           <Line
             type="monotone"
-            name="Dirawat"
-            dataKey={
-              quantity === "harian"
-                ? "update.hospitalized"
-                : "total.hospitalized"
-            }
-            strokeOpacity={opacity.dirawat}
-            stroke="#ED8936"
+            name="2 Dosis"
+            dataKey={quantity === "harian" ? "update.dose2" : "total.dose2"}
+            strokeOpacity={opacity.dose2}
             strokeWidth={2}
-            dot={false}
-            hide={hidden.dirawat}
-            isAnimationActive={false}
-          />
-          <Line
-            type="monotone"
-            name="Sembuh"
-            dataKey={
-              quantity === "harian" ? "update.recovered" : "total.recovered"
-            }
-            strokeOpacity={opacity.sembuh}
             stroke="#82ca9d"
-            strokeWidth={2}
             dot={false}
-            hide={hidden.sembuh}
-            isAnimationActive={false}
-          />
-          <Line
-            type="monotone"
-            name="Meninggal"
-            dataKey={quantity === "harian" ? "update.death" : "total.death"}
-            strokeOpacity={opacity.meninggal}
-            stroke="#000"
-            strokeWidth={2}
-            dot={false}
-            hide={hidden.meninggal}
+            //hide={hidden.dirawat}
             isAnimationActive={false}
           />
         </LineChart>
