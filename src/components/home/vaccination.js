@@ -20,6 +20,7 @@ import ApiError from "../apiError/apiError";
 export default function Vaccination({ changesCounter, ...props }) {
   const [vaccData, setVaccData] = useState([]);
   const [apiError, setApiError] = useState();
+  const VACC_TARGET = 208265720;
 
   useEffect(() => {
     async function getVaccData() {
@@ -36,10 +37,13 @@ export default function Vaccination({ changesCounter, ...props }) {
               icon: <BiTargetLock />,
               marginx: "0",
               cardTitle: "TARGET VAKSINASI NASIONAL",
-              data: 208265720,
+              data: VACC_TARGET,
               changes: {
                 totalYtd: null,
-                percentage: null,
+                percentage: changesCounter(
+                  VACC_TARGET,
+                  response.data.total.dose1plus
+                ),
               },
             },
             {
@@ -137,10 +141,12 @@ export default function Vaccination({ changesCounter, ...props }) {
                       <Flex alignItems="center" fontSize="0.8rem">
                         {key.changes.percentage === null ? null : key.changes
                             .percentage > 0 ? (
-                          <StatArrow
-                            type="increase"
-                            color={key.increaseArrowColor}
-                          />
+                          key.data !== VACC_TARGET && (
+                            <StatArrow
+                              type="increase"
+                              color={key.increaseArrowColor}
+                            />
+                          )
                         ) : (
                           <StatArrow
                             type="decrease"
