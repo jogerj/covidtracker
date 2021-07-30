@@ -78,7 +78,7 @@ export default function RiskProfile({ changesCounter, ...props }) {
   } else {
     return (
       <Box mt={5} {...props}>
-        <HStack pb={2}>
+        <HStack>
           <Text fontSize="4xl" color="teal.600">
             <RiTestTubeFill />
           </Text>
@@ -156,7 +156,12 @@ export default function RiskProfile({ changesCounter, ...props }) {
             </>
           )}
         </SimpleGrid>
-        <Flex mt={[8, 3]} justifyContent="flex-end">
+        <Flex
+          borderBottom="1px"
+          borderBottomColor="gray.200"
+          pb={[0, 2]}
+          justifyContent="flex-end"
+        >
           <UpdateTime date={date} />
         </Flex>
       </Box>

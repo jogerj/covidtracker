@@ -203,7 +203,13 @@ export default function Vaccination({ changesCounter, ...props }) {
             </>
           )}
         </SimpleGrid>
-        <Flex mt={[8, 3]} justifyContent="flex-end">
+        <Flex
+          mt={[3, 0]}
+          justifyContent="flex-end"
+          borderBottom="1px"
+          borderBottomColor="gray.200"
+          pb={[0, 2]}
+        >
           <UpdateTime date={date} />
         </Flex>
       </Box>

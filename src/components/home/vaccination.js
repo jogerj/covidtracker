@@ -101,7 +101,7 @@ export default function Vaccination({ changesCounter, ...props }) {
   } else {
     return (
       <Box {...props}>
-        <HStack pb={2}>
+        <HStack>
           <Text fontSize="4xl" color="blue.400">
             <RiSyringeFill />
           </Text>
@@ -201,7 +201,12 @@ export default function Vaccination({ changesCounter, ...props }) {
             </>
           )}
         </SimpleGrid>
-        <Flex mt={[8, 3]} justifyContent="flex-end">
+        <Flex
+          borderBottom="1px"
+          borderBottomColor="gray.200"
+          pb={[0, 2]}
+          justifyContent="flex-end"
+        >
           <UpdateTime date={date} />
         </Flex>
       </Box>

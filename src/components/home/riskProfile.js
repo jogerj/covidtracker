@@ -132,7 +132,7 @@ export default function RiskProfile({ ...props }) {
   } else {
     return (
       <Box {...props}>
-        <HStack pb={2}>
+        <HStack>
           <Text fontSize="4xl" color="orange.500">
             <HiShieldExclamation />
           </Text>
@@ -142,6 +142,7 @@ export default function RiskProfile({ ...props }) {
           <ExplanationModal />
         </HStack>
         <Radios
+          mt={4}
           mb={2}
           radioOptions={["mingguan", "keseluruhan"]}
           radioName="period"
@@ -218,7 +219,12 @@ export default function RiskProfile({ ...props }) {
             </>
           )}
         </SimpleGrid>
-        <Flex mt={[8, 3]} justifyContent="flex-end">
+        <Flex
+          borderBottom="1px"
+          borderBottomColor="gray.200"
+          pb={[0, 2]}
+          justifyContent="flex-end"
+        >
           <UpdateTime date={date} />
         </Flex>
       </Box>

@@ -36,7 +36,7 @@ export default function Home() {
       <Box>
         <Box my={6}>
           {showInfo && <InfoAlert setShowInfo={setShowInfo} />}
-          <Stack mt={7} spacing={7}>
+          <Stack mt={7} spacing={2}>
             <KopitCase changesCounter={changesCounter} />
             <Vaccination changesCounter={changesCounter} />
             <RiskProfile />
