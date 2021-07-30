@@ -158,7 +158,7 @@ function Chart({ data, quantity, error }) {
             dataKey={quantity === "harian" ? "update.all" : "total.all"}
             strokeOpacity={opacity.dose1}
             strokeWidth={2}
-            stroke="#319795"
+            stroke="#1566C0"
             dot={false}
             //hide={hidden.positif}
             isAnimationActive={false}
@@ -169,7 +169,7 @@ function Chart({ data, quantity, error }) {
             dataKey={quantity === "harian" ? "update.pcrTcm" : "total.pcrTcm"}
             strokeOpacity={opacity.dose1}
             strokeWidth={2}
-            stroke="#1566C0"
+            stroke="#319795"
             dot={false}
             //hide={hidden.positif}
             isAnimationActive={false}

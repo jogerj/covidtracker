@@ -2,7 +2,7 @@ import { Flex, Text, Spinner } from "@chakra-ui/react";
 
 export default function UpdateTime({ date, ...props }) {
   return (
-    <Flex wrap="wrap" alignItems="center" {...props} fontSize="0.8rem">
+    <Flex wrap="wrap" alignItems="center" {...props} fontSize="0.9rem">
       <Text color="gray.500" fontWeight="semibold" f>
         TERAKHIR DIPERBARUI:{" "}
       </Text>

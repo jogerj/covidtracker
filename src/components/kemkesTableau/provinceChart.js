@@ -6,7 +6,11 @@ export default function ProvinceCharts() {
       <div
         className="tableauPlaceholder"
         id="viz1625809327914"
-        style={{ position: "relative", height: "1000px", width: "100%" }}
+        style={{
+          position: "relative",
+          height: "1000px",
+          width: "100%",
+        }}
       >
         <noscript>
           <a href="https://covidtracker.pages.dev/home">

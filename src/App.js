@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Box, Container, ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
@@ -9,14 +8,12 @@ import DataProvinsi from "./components/dataProvinsi/dataProvinsi";
 import Info from "./components/info/info";
 
 function App() {
-  const [tanggal, setTanggal] = useState();
-
   return (
     <ChakraProvider>
       <BrowserRouter>
         <Box bg="#FBFCFF" minHeight="100vh">
           <Container maxW="container.lg">
-            <Navbar tanggal={tanggal} />
+            <Navbar />
 
             <Switch>
               <Route path="/data-provinsi">
@@ -26,7 +23,7 @@ function App() {
                 <Info />
               </Route>
               <Route path="/home">
-                <Home setTanggal={setTanggal} />
+                <Home />
               </Route>
               <Route exact path="/">
                 <Redirect to="/home" />

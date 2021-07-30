@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HStack, Box, useRadioGroup, useRadio } from "@chakra-ui/react";
+import { Text, Box } from "@chakra-ui/react";
 import ProvinceChart from "./provinceChart";
 import CityChart from "./cityChart";
 import Loading from "../loading";
@@ -20,6 +20,9 @@ export default function KemkesCharts() {
 
   return (
     <>
+      <Text mt={5} fontSize="xl" fontWeight="bold">
+        Data Kemenkes
+      </Text>
       <Radios
         radioOptions={["nasional", "kota"]}
         radioName="area"
@@ -27,7 +30,10 @@ export default function KemkesCharts() {
         setter={setArea}
       />
       {/* <RadioArea setArea={setArea} /> */}
-      {renderChart()}
+
+      <Box borderColor="gray.300" borderWidth="1px">
+        {renderChart()}
+      </Box>
     </>
   );
 }

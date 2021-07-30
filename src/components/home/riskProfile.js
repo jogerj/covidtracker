@@ -26,13 +26,50 @@ import {
 } from "@chakra-ui/react";
 import { HiShieldExclamation } from "react-icons/hi";
 import CountUp from "react-countup";
+import UpdateTime from "../updateTime/updateTime";
 import ApiError from "../shared_comp/apiError/apiError";
 import Radios from "../shared_comp/customRadio/customRadio";
 
 export default function RiskProfile({ ...props }) {
   const [riskData, setRiskData] = useState();
+  const [date, setDate] = useState(0);
   const [period, setPeriod] = useState("mingguan");
   const [apiError, setApiError] = useState();
+
+  function riskCategory(riskType, riskNumber) {
+    switch (riskType) {
+      case "casePer100k":
+        switch (true) {
+          case riskNumber > 75:
+            return "red.800";
+          case riskNumber >= 25 && riskNumber <= 75:
+            return "red.500";
+          case riskNumber >= 10 && riskNumber <= 25:
+            return "orange.500";
+          case riskNumber >= 1 && riskNumber <= 10:
+            return "yellow.400";
+          case riskNumber < 1:
+            return "orange.500";
+          default:
+            return null;
+        }
+      case "testRate":
+        switch (true) {
+          case riskNumber > 20:
+            return "red.500";
+          case riskNumber >= 10 && riskNumber <= 20:
+            return "orange.500";
+          case riskNumber >= 3 && riskNumber <= 10:
+            return "yellow.400";
+          case riskNumber < 3:
+            return "orange.500";
+          default:
+            return null;
+        }
+      default:
+        return null;
+    }
+  }
 
   useEffect(() => {
     async function getRiskData() {
@@ -41,21 +78,40 @@ export default function RiskProfile({ ...props }) {
           "https://covidtracker-vincenth19-be.herokuapp.com/api/risk_profile/"
         )
         .then((response) => {
+          setDate(response.data.updateDate);
           setRiskData([
             {
-              iconBg: "orange.500",
+              riskColor: {
+                weekly: riskCategory(
+                  "casePer100k",
+                  response.data.thisWeek.casePer100k
+                ),
+                overall: riskCategory(
+                  "casePer100k",
+                  response.data.overall.casePer100k
+                ),
+              },
               cardTitle: "KASUS PER 100 RIBU ORANG",
               weeklyData: response.data.thisWeek.casePer100k,
               overallData: response.data.overall.casePer100k,
             },
             {
-              iconBg: null,
+              riskColor: null,
               cardTitle: "MENINGGAL PER 100 RIBU ORANG",
               weeklyData: response.data.thisWeek.deathPer100k,
               overallData: response.data.overall.deathPer100k,
             },
             {
-              iconBg: "red.600",
+              riskColor: {
+                weekly: riskCategory(
+                  "testRate",
+                  response.data.thisWeek.positive
+                ),
+                overall: riskCategory(
+                  "testRate",
+                  response.data.overall.positive
+                ),
+              },
               cardTitle: "TINGKAT TES POSITIF",
               weeklyData: response.data.thisWeek.positive,
               overallData: response.data.overall.positive,
@@ -75,7 +131,7 @@ export default function RiskProfile({ ...props }) {
     return <ApiError errorTitle="" errorMessage={apiError} />;
   } else {
     return (
-      <Box mt={5} {...props}>
+      <Box {...props}>
         <HStack pb={2}>
           <Text fontSize="4xl" color="orange.500">
             <HiShieldExclamation />
@@ -108,10 +164,14 @@ export default function RiskProfile({ ...props }) {
                   key={index}
                 >
                   <Flex alignContent="center" align="center">
-                    {key.iconBg && (
+                    {key.riskColor && (
                       <Box
                         p={2}
-                        bg={key.iconBg}
+                        bg={
+                          period === "mingguan"
+                            ? key.riskColor.weekly
+                            : key.riskColor.overall
+                        }
                         borderRadius={100}
                         mr={4}
                         height="25px"
@@ -158,6 +218,9 @@ export default function RiskProfile({ ...props }) {
             </>
           )}
         </SimpleGrid>
+        <Flex mt={[8, 3]} justifyContent="flex-end">
+          <UpdateTime date={date} />
+        </Flex>
       </Box>
     );
   }
@@ -195,8 +258,7 @@ function ExplanationModal() {
                   />
                   <Stack>
                     <Text fontWeight="semibold">
-                      <Text>Di atas 75</Text>
-                      <Text>(Penyebaran Parah)</Text>
+                      <Text>Di atas 75 (Penyebaran Parah)</Text>
                     </Text>
                   </Stack>
                 </Flex>
@@ -246,8 +308,7 @@ function ExplanationModal() {
                   />
                   <Stack>
                     <Text fontWeight="semibold">
-                      <Text>Di bawah 1</Text>
-                      <Text>(Menuju ke arah aman)</Text>
+                      <Text>Di bawah 1 (Menuju ke arah aman)</Text>
                     </Text>
                   </Stack>
                 </Flex>

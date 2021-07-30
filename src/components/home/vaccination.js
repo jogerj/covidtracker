@@ -15,10 +15,12 @@ import {
 import { RiSyringeFill } from "react-icons/ri";
 import { BiTargetLock } from "react-icons/bi";
 import CountUp from "react-countup";
+import UpdateTime from "../updateTime/updateTime";
 import ApiError from "../shared_comp/apiError/apiError";
 
 export default function Vaccination({ changesCounter, ...props }) {
   const [vaccData, setVaccData] = useState([]);
+  const [date, setDate] = useState(0);
   const [apiError, setApiError] = useState();
   const VACC_TARGET = 208265720;
 
@@ -29,6 +31,7 @@ export default function Vaccination({ changesCounter, ...props }) {
           "https://covidtracker-vincenth19-be.herokuapp.com/api/vaccination/"
         )
         .then((response) => {
+          setDate(response.data.updateDate);
           setVaccData([
             {
               iconBg: "blue.100",
@@ -198,6 +201,9 @@ export default function Vaccination({ changesCounter, ...props }) {
             </>
           )}
         </SimpleGrid>
+        <Flex mt={[8, 3]} justifyContent="flex-end">
+          <UpdateTime date={date} />
+        </Flex>
       </Box>
     );
   }

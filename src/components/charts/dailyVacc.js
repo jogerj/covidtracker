@@ -74,16 +74,14 @@ export default function DailyCase({ ...props }) {
 
 function Chart({ data, quantity, error }) {
   const [opacity, setOpacity] = useState({
-    positif: 1,
-    dirawat: 1,
-    sembuh: 1,
-    meninggal: 1,
+    dose1: 1,
+    dose1plus: 1,
+    dose2: 1,
   });
   const [hidden, setHidden] = useState({
-    positif: false,
-    dirawat: false,
-    sembuh: false,
-    meninggal: false,
+    dose1: false,
+    dose1plus: false,
+    dose2: false,
   });
   // const handleMouseEnter = (e) => {
   //     setOpacity({...opacity, [e.dataKey]: 0.5})
@@ -154,13 +152,26 @@ function Chart({ data, quantity, error }) {
           />
           <Line
             type="monotone"
+            name="Semua"
+            dataKey={
+              quantity === "harian" ? "update.dose1plus" : "total.dose1plus"
+            }
+            strokeOpacity={opacity.dose1plus}
+            strokeWidth={2}
+            stroke="#1665C0"
+            dot={false}
+            hide={hidden.dirawat}
+            isAnimationActive={false}
+          />
+          <Line
+            type="monotone"
             name="1 Dosis"
             dataKey={quantity === "harian" ? "update.dose1" : "total.dose1"}
             strokeOpacity={opacity.dose1}
             strokeWidth={2}
-            stroke="#1665C0"
+            stroke="#DE6B1F"
             dot={false}
-            //hide={hidden.positif}
+            hide={hidden.positif}
             isAnimationActive={false}
           />
           <Line
@@ -169,9 +180,9 @@ function Chart({ data, quantity, error }) {
             dataKey={quantity === "harian" ? "update.dose2" : "total.dose2"}
             strokeOpacity={opacity.dose2}
             strokeWidth={2}
-            stroke="#82ca9d"
+            stroke="#319795"
             dot={false}
-            //hide={hidden.dirawat}
+            hide={hidden.dirawat}
             isAnimationActive={false}
           />
         </LineChart>

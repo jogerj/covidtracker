@@ -8,19 +8,12 @@ import {
   Button,
   Flex,
 } from "@chakra-ui/react";
-import axios from "axios";
+
 import { NavLink } from "react-router-dom";
-import {
-  RiCloseCircleLine,
-  RiInformationFill,
-  RiVirusFill,
-  RiThermometerFill,
-  RiHeartFill,
-} from "react-icons/ri";
-import { GiTombstone } from "react-icons/gi";
+import { RiCloseCircleLine, RiInformationFill } from "react-icons/ri";
+
 import ApiError from "../shared_comp/apiError/apiError";
 import KopitCase from "./kopitCase";
-import Hospitalization from "./hospitalization";
 import Vaccination from "./vaccination";
 import DailyCase from "../charts/dailyCase";
 import KemkesCharts from "../kemkesTableau/kemkesCharts";
@@ -29,134 +22,44 @@ import DailyVacc from "../charts/dailyVacc";
 import DailyTesting from "../charts/dailyTesting";
 import Testing from "./testing";
 
-export default function Home({ setTanggal }) {
+export default function Home() {
   const [showInfo, setShowInfo] = useState(true);
   const [caseData, setCaseData] = useState([]);
-  const [hospiData, setHospiData] = useState([]);
-  const [apiError, setApiError] = useState();
 
   function changesCounter(currentData, todayData) {
     let res = (todayData / currentData) * 100;
     return parseFloat(res.toFixed(2));
   }
 
-  useEffect(() => {
-    async function getCaseData() {
-      await axios
-        .get("https://covidtracker-vincenth19-be.herokuapp.com/api/national")
-        .then((response) => {
-          setTanggal(response.data.updateDate);
-          setCaseData([
-            {
-              iconBg: "red.100",
-              iconColor: "red.500",
-              icon: <RiVirusFill />,
-              cardTitle: "TOTAL KASUS POSITIF",
-              data: response.data.total.positive,
-              increaseArrowColor: "red.500",
-              decreaseArrowColor: "teal.500",
-              changes: {
-                totalYtd: response.data.update.positive,
-                percentage: changesCounter(
-                  response.data.total.positive,
-                  response.data.update.positive
-                ),
-              },
-            },
-            {
-              iconBg: "gray.100",
-              iconColor: "gray.500",
-              icon: <GiTombstone />,
-              cardTitle: "TOTAL KEMATIAN",
-              data: response.data.total.death,
-              increaseArrowColor: "red.500",
-              decreaseArrowColor: "teal.500",
-              changes: {
-                totalYtd: response.data.update.death,
-                percentage: changesCounter(
-                  response.data.total.death,
-                  response.data.update.death
-                ),
-              },
-            },
-          ]);
-
-          setHospiData([
-            {
-              iconBg: "orange.100",
-              iconColor: "orange.500",
-              icon: <RiThermometerFill />,
-              cardTitle: "TOTAL KASUS AKTIF",
-              data: response.data.total.hospitalized,
-              increaseArrowColor: "red.500",
-              decreaseArrowColor: "teal.500",
-              changes: {
-                totalYtd: response.data.update.hospitalized,
-                percentage: changesCounter(
-                  response.data.total.hospitalized,
-                  response.data.update.hospitalized
-                ),
-              },
-            },
-            {
-              iconBg: "teal.100",
-              iconColor: "teal.500",
-              icon: <RiHeartFill />,
-              cardTitle: "TOTAL KESEMBUHAN",
-              data: response.data.total.recovered,
-              increaseArrowColor: "teal.500",
-              decreaseArrowColor: "red.500",
-              changes: {
-                totalYtd: response.data.update.recovered,
-                percentage: changesCounter(
-                  response.data.total.recovered,
-                  response.data.update.recovered
-                ),
-              },
-            },
-          ]);
-        })
-        .catch((error) => {
-          setApiError(error.toString());
-          console.error("There was an error!", error);
-        });
-    }
-
-    getCaseData();
-  }, [setTanggal]);
-
   return (
     <>
       <Box>
         <Box my={6}>
           {showInfo && <InfoAlert setShowInfo={setShowInfo} />}
-          {apiError ? (
-            <ApiError
-              errorTitle="Ada masalah di API untuk mengambil data kasus terbaru."
-              errorMessage={apiError}
-            />
-          ) : (
-            <SimpleGrid
-              minChildWidth={["94%", "94%", "94%", "47%"]}
-              spacing={6}
-            >
-              <KopitCase data={caseData} />
-              <Hospitalization data={hospiData} />
-            </SimpleGrid>
-          )}
-          <Vaccination mt={5} changesCounter={changesCounter} />
-          <RiskProfile />
-          <Testing changesCounter={changesCounter} />
-          <DailyCase />
-          <DailyVacc />
-          <DailyTesting />
+          <Stack mt={7} spacing={7}>
+            <KopitCase changesCounter={changesCounter} />
+            <Vaccination changesCounter={changesCounter} />
+            <RiskProfile />
+            <Testing changesCounter={changesCounter} />
+            <Box>
+              <Text
+                fontWeight="bold"
+                fontSize="2xl"
+                borderBottom="1px"
+                borderBottomColor="gray.200"
+              >
+                Statistik
+              </Text>
+              <Stack spacing={5}>
+                <DailyCase />
+                <DailyVacc />
+                <DailyTesting />
+
+                <KemkesCharts />
+              </Stack>
+            </Box>
+          </Stack>
         </Box>
-        <Stack>
-          <Text mt={5} fontSize="xl" fontWeight="bold">
-            Statistik Kemenkes
-          </Text>
-          <KemkesCharts />
-        </Stack>
       </Box>
     </>
   );

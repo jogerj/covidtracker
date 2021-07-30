@@ -14,10 +14,12 @@ import {
 } from "@chakra-ui/react";
 import { RiTestTubeFill } from "react-icons/ri";
 import CountUp from "react-countup";
+import UpdateTime from "../updateTime/updateTime";
 import ApiError from "../shared_comp/apiError/apiError";
 
 export default function RiskProfile({ changesCounter, ...props }) {
   const [testingData, setTestingData] = useState();
+  const [date, setDate] = useState(0);
   const [apiError, setApiError] = useState();
 
   useEffect(() => {
@@ -25,6 +27,7 @@ export default function RiskProfile({ changesCounter, ...props }) {
       await axios
         .get("https://covidtracker-vincenth19-be.herokuapp.com/api/testing/")
         .then((response) => {
+          setDate(response.data.updateDate);
           setTestingData([
             {
               cardTitle: "TOTAL TES",
@@ -68,7 +71,7 @@ export default function RiskProfile({ changesCounter, ...props }) {
     }
 
     getRiskData();
-  }, []);
+  }, [changesCounter]);
 
   if (apiError) {
     return <ApiError errorTitle="" errorMessage={apiError} />;
@@ -153,6 +156,9 @@ export default function RiskProfile({ changesCounter, ...props }) {
             </>
           )}
         </SimpleGrid>
+        <Flex mt={[8, 3]} justifyContent="flex-end">
+          <UpdateTime date={date} />
+        </Flex>
       </Box>
     );
   }

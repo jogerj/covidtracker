@@ -11,10 +11,9 @@ import {
 import { useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import { RiMenu3Fill } from "react-icons/ri";
-import UpdateTime from "../updateTime/updateTime";
 import Virus from "../../virus.png";
 
-export default function Navbar({ tanggal }) {
+export default function Navbar() {
   const ACTIVE_LINK = {
     fontWeight: "700",
     color: "#FFFFFF",
@@ -61,11 +60,6 @@ export default function Navbar({ tanggal }) {
           <Text fontWeight="bold" fontSize={["lg", "xl", "2xl", "3xl"]}>
             CovidTracker
           </Text>
-          <UpdateTime
-            date={tanggal}
-            textAlign="left"
-            display={["none", "flex"]}
-          />
         </Stack>
       </Flex>
       <Spacer />
@@ -122,11 +116,6 @@ export default function Navbar({ tanggal }) {
         >
           About Me
         </Button>
-        <UpdateTime
-          textAlign="right"
-          date={tanggal}
-          display={["flex", "none"]}
-        />
       </Stack>
     </Flex>
   );
