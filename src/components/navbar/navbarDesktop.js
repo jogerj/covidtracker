@@ -8,17 +8,20 @@ import {
   Image,
   Container,
 } from "@chakra-ui/react";
-import { useMemo } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import Virus from "../../virus.png";
 
 export default function NavbarDesktop({ ...props }) {
+  const [currentPageText, setCurrentPageText] = useState("");
+  const URL_LOCATION = useLocation();
   const ACTIVE_LINK = {
     fontWeight: "700",
     color: "#FFFFFF",
     backgroundColor: "#EB5569",
     padding: "0px 10px",
     borderRadius: "5px",
+    textDecoration: "none",
   };
 
   const NAV_LINKS = useMemo(
@@ -39,6 +42,23 @@ export default function NavbarDesktop({ ...props }) {
     []
   );
 
+  useEffect(() => {
+    switch (URL_LOCATION.pathname) {
+      case "/home":
+        setCurrentPageText("Beranda");
+        break;
+      case "/data-provinsi":
+        setCurrentPageText("Data Provinsi");
+        break;
+      case "/info":
+        setCurrentPageText("Info");
+        break;
+      default:
+        setCurrentPageText("");
+        break;
+    }
+  }, [URL_LOCATION]);
+
   return (
     <Container maxW="container.lg">
       <Flex
@@ -53,10 +73,10 @@ export default function NavbarDesktop({ ...props }) {
         padding={6}
       >
         <Flex wrap="wrap" align="center">
-          <Image src={Virus} boxSize="50px" />
+          <Image src={Virus} boxSize={["35px", "50px"]} />
           <Stack spacing={0} ml={3}>
-            <Text fontWeight="bold" fontSize={["2xl", "3xl"]}>
-              CovidTracker
+            <Text fontWeight="bold" fontSize={["xl", "3xl"]}>
+              {currentPageText}
             </Text>
           </Stack>
         </Flex>
@@ -80,7 +100,7 @@ export default function NavbarDesktop({ ...props }) {
                 activeStyle={ACTIVE_LINK}
                 to={data.path}
               >
-                {data.text}
+                <Text textDecoration="none">{data.text}</Text>
               </Link>
             );
           })}

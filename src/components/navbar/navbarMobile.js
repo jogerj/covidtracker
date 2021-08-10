@@ -31,6 +31,7 @@ export default function NavbarMobile({ ...props }) {
   );
   const ACTIVE_LINK = {
     color: "#EB5569",
+    textDecoration: "none",
   };
   return (
     <Flex
@@ -40,7 +41,7 @@ export default function NavbarMobile({ ...props }) {
       bottom={0}
       width="full"
       overflow="hidden"
-      py={3}
+      py={2}
       zIndex={2}
       bg="white"
       borderTop="1px"
@@ -54,22 +55,27 @@ export default function NavbarMobile({ ...props }) {
         return (
           <>
             <Link as={NavLink} to={data.path} activeStyle={ACTIVE_LINK}>
-              <Stack align="center">
-                {data.icon}
-                <Text>{data.text}</Text>
+              <Stack align="center" spacing={0}>
+                <Text fontSize="1.4rem">{data.icon}</Text>
+                <Text fontSize="0.65rem" textDecoration="none">
+                  {data.text}
+                </Text>
               </Stack>
             </Link>
           </>
         );
       })}
-      <Stack align="center">
-        <RiAlarmWarningFill />
+      <Stack align="center" spacing={0}>
+        <Text fontSize="1.4rem">
+          <RiAlarmWarningFill />
+        </Text>
+
         <Link
           href="https://covid19.go.id/pelaporan-mandiri"
           target="_blank"
           rel="noreferrer"
         >
-          <Text>Lapor</Text>
+          <Text fontSize="0.65rem">Lapor</Text>
         </Link>
       </Stack>
     </Flex>
