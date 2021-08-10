@@ -74,11 +74,22 @@ export default function NavbarDesktop({ ...props }) {
       >
         <Flex wrap="wrap" align="center">
           <Image src={Virus} boxSize={["35px", "50px"]} />
-          <Stack spacing={0} ml={3}>
-            <Text fontWeight="bold" fontSize={["xl", "3xl"]}>
+          <Flex ml={3}>
+            <Text
+              fontWeight="bold"
+              fontSize={["xl", "3xl"]}
+              display={["none", "none", "none", "inline"]}
+            >
+              CovidTracker
+            </Text>
+            <Text
+              fontWeight="bold"
+              fontSize={["xl", "3xl"]}
+              display={["inline", "inline", "inline", "none"]}
+            >
               {currentPageText}
             </Text>
-          </Stack>
+          </Flex>
         </Flex>
         <Spacer />
 
