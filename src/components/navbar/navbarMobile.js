@@ -19,12 +19,12 @@ export default function NavbarMobile({ ...props }) {
       {
         path: "/data-provinsi",
         icon: <RiMapPin2Fill />,
-        text: "Data Provinsi",
+        text: "Provinsi",
       },
       {
         path: "/info",
         icon: <RiInformationFill />,
-        text: "Info Bantuan",
+        text: "Bantuan",
       },
     ],
     []
@@ -69,13 +69,7 @@ export default function NavbarMobile({ ...props }) {
           target="_blank"
           rel="noreferrer"
         >
-          Lapor Mandiri
-        </Link>
-      </Stack>
-      <Stack align="center">
-        <RiUserFill />
-        <Link href="https://vincenth19.com" target="_blank" rel="noreferrer">
-          About Me
+          <Text>Lapor</Text>
         </Link>
       </Stack>
     </Flex>
