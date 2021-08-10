@@ -27,6 +27,7 @@ export default function Vaccination({ changesCounter, ...props }) {
   const [caseData, setCaseData] = useState([]);
   const [date, setDate] = useState(0);
   const [apiError, setApiError] = useState();
+
   useEffect(() => {
     async function getCaseData() {
       await axios
@@ -107,7 +108,7 @@ export default function Vaccination({ changesCounter, ...props }) {
     }
 
     getCaseData();
-  }, []);
+  }, [changesCounter]);
 
   if (apiError) {
     return <ApiError errorTitle="" errorMessage={apiError} />;

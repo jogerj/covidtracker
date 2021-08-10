@@ -268,7 +268,9 @@ export default function TableProvince({ ...props }) {
   ];
 
   async function getDataTable() {
-    await fetch("https://covidtracker-backend.vercel.app/api/province/more")
+    await fetch(
+      "https://covidtracker-vincenth19-be.herokuapp.com/api/province/more"
+    )
       .then((response) => response.json())
       .then((data) => {
         setLocalCaseData(data.provinces);

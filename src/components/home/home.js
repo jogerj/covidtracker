@@ -1,22 +1,12 @@
-import { useState, useEffect } from "react";
-import {
-  Box,
-  Text,
-  SimpleGrid,
-  Stack,
-  Link,
-  Button,
-  Flex,
-} from "@chakra-ui/react";
+import { useState } from "react";
+import { Box, Text, Stack, Link, Button, Flex } from "@chakra-ui/react";
 
 import { NavLink } from "react-router-dom";
 import { RiCloseCircleLine, RiInformationFill } from "react-icons/ri";
-
-import ApiError from "../shared_comp/apiError/apiError";
 import KopitCase from "./kopitCase";
 import Vaccination from "./vaccination";
 import DailyCase from "../charts/dailyCase";
-import KemkesCharts from "../kemkesTableau/kemkesCharts";
+import KemkesCharts from "../kemkesTableau/covidCharts";
 import RiskProfile from "./riskProfile";
 import DailyVacc from "../charts/dailyVacc";
 import DailyTesting from "../charts/dailyTesting";
@@ -24,7 +14,6 @@ import Testing from "./testing";
 
 export default function Home() {
   const [showInfo, setShowInfo] = useState(true);
-  const [caseData, setCaseData] = useState([]);
 
   function changesCounter(currentData, todayData) {
     let res = (todayData / currentData) * 100;

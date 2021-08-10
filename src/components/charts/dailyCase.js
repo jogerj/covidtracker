@@ -58,6 +58,7 @@ export default function DailyCase({ ...props }) {
           radioName="quantity"
           radioDefaultValue="harian"
           setter={setQuantity}
+          mt={5}
         />
         {chartData ? (
           <>
@@ -124,7 +125,7 @@ function Chart({ data, quantity, error }) {
 
   return (
     <Box>
-      <Flex justifyContent="center" mt={5}>
+      <Flex justifyContent="center">
         <LineChart
           width={chartWidth()}
           height={500}
@@ -169,7 +170,7 @@ function Chart({ data, quantity, error }) {
           />
           <Line
             type="monotone"
-            name="Dirawat"
+            name="Kasus Aktif"
             dataKey={
               quantity === "harian"
                 ? "update.hospitalized"

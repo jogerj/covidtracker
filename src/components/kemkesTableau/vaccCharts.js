@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Text, Box } from "@chakra-ui/react";
-import ProvinceChart from "./provinceChart";
-import CityChart from "./cityChart";
+import ProvinceVaccChart from "./provinceVaccChart";
+import CityVaccChart from "./cityVaccChart";
 import Loading from "../loading";
 import Radios from "../shared_comp/customRadio/customRadio";
 
-export default function KemkesCharts() {
+export default function KemkesCovidCharts() {
   const [area, setArea] = useState("nasional");
 
   function renderChart() {
     if (area === "nasional") {
-      return <ProvinceChart />;
+      return <ProvinceVaccChart />;
     } else if (area === "kota") {
-      return <CityChart />;
+      return <CityVaccChart />;
     } else {
       return <Loading minH="10vh" mt={5} />;
     }
@@ -21,13 +21,15 @@ export default function KemkesCharts() {
   return (
     <>
       <Text mt={5} fontSize="xl" fontWeight="bold">
-        Data Kemenkes
+        Data Vaksinasi KemKes
       </Text>
       <Radios
         radioOptions={["nasional", "kota"]}
         radioName="area"
         radioDefaultValue="nasional"
         setter={setArea}
+        mt={5}
+        mb={3}
       />
       {/* <RadioArea setArea={setArea} /> */}
 
