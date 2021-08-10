@@ -3,7 +3,7 @@ import NavbarMobile from "./navbarMobile";
 export default function Navbar() {
   return (
     <>
-      <NavbarDesktop display={["none", "none", "none", "flex"]} />
+      <NavbarDesktop />
       <NavbarMobile display={["flex", "flex", "flex", "none"]} />
     </>
   );

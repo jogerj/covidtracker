@@ -55,7 +55,7 @@ export default function NavbarDesktop({ ...props }) {
         <Flex wrap="wrap" align="center">
           <Image src={Virus} boxSize="50px" />
           <Stack spacing={0} ml={3}>
-            <Text fontWeight="bold" fontSize={["lg", "xl", "2xl", "3xl"]}>
+            <Text fontWeight="bold" fontSize={["2xl", "3xl"]}>
               CovidTracker
             </Text>
           </Stack>
@@ -63,6 +63,7 @@ export default function NavbarDesktop({ ...props }) {
         <Spacer />
 
         <Stack
+          display={["none", "none", "none", "flex"]}
           direction="row"
           width="auto"
           textAlign={"right"}
