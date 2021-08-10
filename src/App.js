@@ -12,9 +12,8 @@ function App() {
     <ChakraProvider>
       <BrowserRouter>
         <Box bg="#FBFCFF" minHeight="100vh">
-          <Container maxW="container.lg">
-            <Navbar />
-
+          <Navbar />
+          <Container maxW="container.lg" mb={["5rem", "5rem", "5rem", 0]}>
             <Switch>
               <Route path="/data-provinsi">
                 <DataProvinsi />

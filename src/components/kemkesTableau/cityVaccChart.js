@@ -13,7 +13,7 @@ export default function CityVaccChart() {
             <img
               alt="Map by District "
               src="https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Da&#47;DashboardVaksinKemkes&#47;MapbyDistrict&#47;1_rss.png"
-              style="border: none"
+              style={{ border: "none" }}
             />
           </a>
         </noscript>
