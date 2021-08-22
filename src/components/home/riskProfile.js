@@ -128,7 +128,12 @@ export default function RiskProfile({ ...props }) {
   }, []);
 
   if (apiError) {
-    return <ApiError errorTitle="" errorMessage={apiError} />;
+    return (
+      <ApiError
+        errorTitle="Ada masalah di API untuk mengambil data profil risiko"
+        errorMessage={apiError}
+      />
+    );
   } else {
     return (
       <Box {...props}>

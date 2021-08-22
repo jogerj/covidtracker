@@ -111,7 +111,12 @@ export default function Vaccination({ changesCounter, ...props }) {
   }, [changesCounter]);
 
   if (apiError) {
-    return <ApiError errorTitle="" errorMessage={apiError} />;
+    return (
+      <ApiError
+        errorTitle="Ada masalah di API untuk mengambil data kasus"
+        errorMessage={apiError}
+      />
+    );
   } else {
     return (
       <Box {...props}>

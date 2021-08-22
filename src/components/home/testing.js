@@ -74,7 +74,12 @@ export default function RiskProfile({ changesCounter, ...props }) {
   }, [changesCounter]);
 
   if (apiError) {
-    return <ApiError errorTitle="" errorMessage={apiError} />;
+    return (
+      <ApiError
+        errorTitle="Ada masalah di API untuk mengambil data test"
+        errorMessage={apiError}
+      />
+    );
   } else {
     return (
       <Box mt={5} {...props}>

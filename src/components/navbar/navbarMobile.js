@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { Flex, Stack, Text, Link } from "@chakra-ui/react";
 import {
   RiInformationFill,
-  RiUserFill,
   RiMapPin2Fill,
   RiAlarmWarningFill,
   RiHome2Fill,
